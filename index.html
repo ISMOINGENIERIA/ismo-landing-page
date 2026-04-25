@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth snap-y snap-mandatory">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMAS ISMO | Ingeniería en Desarrollo APP WEB</title>
+    <meta name="description" content="Sistemas APP WEB personalizados, pago único. Ingeniería en desarrollo para cualquier tipo de negocio.">
+    
+    <!-- Google Fonts for Luxury Tech feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        luxury: {
+                            black: '#020408',
+                            gray: '#0A0E17',
+                            silver: '#e5e7eb',
+                            accent: '#ffffff',
+                            cyan: '#00F0FF',
+                            blue: '#0047FF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'float-slow': 'float 10s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'pan-bg': 'panBg 40s linear infinite',
+                        'spin-slow': 'spin 15s linear infinite',
+                        'spin-slow-reverse': 'spin 20s linear infinite reverse',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotateX(10deg) rotateY(-10deg)' },
+                            '50%': { transform: 'translateY(-20px) rotateX(15deg) rotateY(-5deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', filter: 'blur(20px)' },
+                            '50%': { opacity: '0.8', filter: 'blur(30px)' },
+                        },
+                        panBg: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '100%': { backgroundPosition: '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020408;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .text-silver { color: #a3a3a3; }
+
+        /* Dynamic Grid Background */
+        .bg-tech-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+
+        /* Glassmorphism Panels */
+        .glass-card {
+            background: rgba(10, 14, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 71, 255, 0.2), inset 0 0 20px rgba(0, 240, 255, 0.1);
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+        }
+
+        /* 3D Window Snap Reveal classes */
+        .reveal-element {
+            opacity: 0;
+            filter: blur(15px);
+            transform: perspective(1200px) rotateX(-15deg) translateY(80px) scale(0.85);
+            transform-style: preserve-3d;
+            transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1), filter 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform, opacity, filter;
+        }
+        .reveal-element.active {
+            opacity: 1;
+            filter: blur(0px);
+            transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+        }
+
+        .luxury-button {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: transparent;
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+        .luxury-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+        .luxury-button:hover::before {
+            left: 100%;
+        }
+        .luxury-button:hover {
+            background: #ffffff;
+            color: #020408;
+            border-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #00F0FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .line-accent {
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, #00F0FF, transparent);
+            margin: 0 auto;
+        }
+        
+        /* 3D Dashboard Image */
+        .dashboard-3d {
+            transform-style: preserve-3d;
+            box-shadow: 
+                -20px 20px 60px rgba(0, 71, 255, 0.3),
+                0 0 100px rgba(0, 240, 255, 0.1) inset;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .holo-ring {
+            border-radius: 50%;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            position: absolute;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-luxury-cyan selection:text-black">
+
+    <!-- Ambient Orbs -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-luxury-blue rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-pulse-glow z-[-1] pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-luxury-cyan rounded-full mix-blend-screen filter blur-[120px] opacity-10 animate-pulse-glow z-[-1] pointer-events-none" style="animation-delay: 2s;"></div>
+    <div class="fixed inset-0 bg-tech-grid z-[-1] pointer-events-none"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 py-6 transition-all duration-500 backdrop-blur-md bg-luxury-black/50 border-b border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
+            <div class="font-display font-light text-2xl tracking-[0.2em] uppercase text-white flex items-center gap-3">
+                <img src="ismo logo.png" alt="Sistemas ISMO Logo" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">
+                <div>Sistemas<span class="font-bold text-gradient"> ISMO</span></div>
+            </div>
+            <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado" target="_blank" class="hidden md:block text-xs uppercase tracking-[0.15em] font-medium luxury-button px-6 py-3 text-white rounded-sm">
+                Solicitar Sistema
+            </a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION (Enhanced with Particles and Holograms) -->
+    <section class="snap-start relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden pt-32 pb-20">
+        <div class="absolute inset-0 z-[-2] opacity-30">
+            <img src="abstract_bg.png" alt="Tech Background" class="w-full h-full object-cover scale-110 object-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black/40 via-transparent to-luxury-black"></div>
+        </div>
+
+        <!-- RGB LED Particles -->
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            <!-- Capa original -->
+            <div class="absolute top-[20%] left-[15%] w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-float"></div>
+            <div class="absolute top-[60%] left-[10%] w-1.5 h-1.5 bg-luxury-cyan rounded-full shadow-[0_0_20px_rgba(0,240,255,1)] animate-float-delayed"></div>
+            <div class="absolute top-[30%] right-[20%] w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_15px_rgba(74,222,128,0.8)] animate-float-slow"></div>
+            <div class="absolute top-[75%] right-[15%] w-1.5 h-1.5 bg-luxury-blue rounded-full shadow-[0_0_20px_rgba(0,71,255,1)] animate-float"></div>
+            <div class="absolute top-[40%] left-[50%] w-1 h-1 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.8)] animate-float-delayed"></div>
+            
+            <!-- Nueva capa de alta energía -->
+            <div class="absolute top-[10%] right-[30%] w-2 h-2 bg-luxury-cyan rounded-full shadow-[0_0_25px_rgba(0,240,255,1)] animate-pulse-glow"></div>
+            <div class="absolute top-[85%] left-[25%] w-1.5 h-1.5 bg-yellow-400 rounded-full shadow-[0_0_15px_rgba(250,204,21,0.8)] animate-float-slow"></div>
+            <div class="absolute top-[50%] right-[5%] w-1 h-1 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)] animate-float"></div>
+            <div class="absolute top-[15%] left-[45%] w-1.5 h-1.5 bg-luxury-blue rounded-full shadow-[0_0_20px_rgba(0,71,255,0.8)] animate-float-delayed"></div>
+            <div class="absolute bottom-[20%] right-[40%] w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_20px_rgba(192,132,252,0.9)] animate-pulse-glow"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center gap-16 relative z-10">
+            <div class="text-left flex-1 reveal-element active">
+                <p class="inline-block px-3 py-1 mb-6 text-xs font-bold tracking-[0.2em] uppercase text-luxury-cyan border border-luxury-cyan/30 rounded-full bg-luxury-cyan/10">Ingeniería en Desarrollo</p>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-light leading-tight tracking-tight mb-8">
+                    Control <span class="font-bold text-gradient">ABSOLUTO</span><br>
+                    de tu NEGOCIO.
+                </h1>
+                <p class="text-lg md:text-xl font-light text-silver max-w-xl mb-12 leading-relaxed">
+                    Desarrollamos la arquitectura digital exacta de tu negocio. APP WEB a la medida, automatización y control total en una sola plataforma.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado%20para%20mi%20negocio." target="_blank" class="px-8 py-4 bg-white text-black font-bold text-sm tracking-widest uppercase hover:scale-105 transition-transform duration-300 rounded-sm flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex-1 w-full relative reveal-element active group" style="transition-delay: 0.3s;">
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden dashboard-3d animate-float transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_80px_rgba(0,240,255,0.2)]">
+                    <img src="hero_dashboard.png" alt="Dashboard Interface" class="w-full h-full object-cover opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-luxury-blue/20 to-transparent mix-blend-overlay pointer-events-none"></div>
+                </div>
+                
+                <!-- Holographic Hover Tags (Mini Windows) -->
+                <!-- CATÁLOGO -->
+                <div class="absolute -top-16 -left-4 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-500 delay-75 z-20 pointer-events-none">
+                    <div class="glass-card p-3 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.3)] min-w-[150px] flex flex-col gap-3 backdrop-blur-xl bg-luxury-black/80">
+                        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+                            <svg class="w-4 h-4 text-luxury-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                            <span class="text-luxury-cyan text-[10px] font-bold tracking-widest">CATÁLOGO</span>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="h-1 w-full bg-white/20 rounded-full"></div>
+                            <div class="h-1 w-3/4 bg-luxury-cyan/40 rounded-full"></div>
+                            <div class="flex gap-1 mt-1">
+                                <div class="h-4 w-4 rounded bg-luxury-cyan/20"></div>
+                                <div class="h-4 w-4 rounded bg-luxury-cyan/20"></div>
+                                <div class="h-4 w-4 rounded bg-luxury-cyan/20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VENTAS -->
+                <div class="absolute top-1/4 -right-20 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-500 delay-150 z-20 pointer-events-none">
+                    <div class="glass-card p-3 rounded-xl border-green-400/40 shadow-[0_0_25px_rgba(74,222,128,0.3)] min-w-[160px] flex flex-col gap-3 backdrop-blur-xl bg-luxury-black/80">
+                        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+                            <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            <span class="text-green-400 text-[10px] font-bold tracking-widest">VENTAS</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <div class="h-1 w-8 bg-white/20 rounded-full"></div>
+                                <div class="text-[8px] text-green-400 font-bold">+$1,250</div>
+                            </div>
+                            <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full w-[80%] bg-green-400 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CLIENTES -->
+                <div class="absolute bottom-1/4 -left-16 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-500 delay-100 z-20 pointer-events-none">
+                    <div class="glass-card p-3 rounded-xl border-purple-400/40 shadow-[0_0_25px_rgba(192,132,252,0.3)] min-w-[150px] flex flex-col gap-3 backdrop-blur-xl bg-luxury-black/80">
+                        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <span class="text-purple-400 text-[10px] font-bold tracking-widest">CLIENTES</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-purple-400/20"></div>
+                                <div class="h-1 w-12 bg-white/30 rounded-full"></div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full bg-purple-400/20"></div>
+                                <div class="h-1 w-10 bg-white/30 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INVENTARIO -->
+                <div class="absolute -bottom-10 right-10 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-500 delay-200 z-20 pointer-events-none">
+                    <div class="glass-card p-3 rounded-xl border-yellow-400/40 shadow-[0_0_25px_rgba(250,204,21,0.3)] min-w-[140px] flex flex-col gap-3 backdrop-blur-xl bg-luxury-black/80">
+                        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+                            <svg class="w-4 h-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                            <span class="text-yellow-400 text-[10px] font-bold tracking-widest">INVENTARIO</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div class="h-6 bg-yellow-400/20 rounded"></div>
+                            <div class="h-6 bg-yellow-400/20 rounded"></div>
+                            <div class="h-6 bg-yellow-400/40 rounded"></div>
+                            <div class="h-6 bg-yellow-400/20 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DASHBOARD -->
+                <div class="absolute -top-12 right-1/4 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-500 delay-[50ms] z-20 pointer-events-none">
+                    <div class="glass-card p-3 rounded-xl border-luxury-blue/40 shadow-[0_0_25px_rgba(0,71,255,0.3)] min-w-[150px] flex flex-col gap-3 backdrop-blur-xl bg-luxury-black/80">
+                        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+                            <svg class="w-4 h-4 text-luxury-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            <span class="text-luxury-blue text-[10px] font-bold tracking-widest">DASHBOARD</span>
+                        </div>
+                        <div class="flex items-end gap-1 h-8 mt-1">
+                            <div class="w-1/4 bg-luxury-blue/40 h-[40%] rounded-t-sm"></div>
+                            <div class="w-1/4 bg-luxury-blue/60 h-[70%] rounded-t-sm"></div>
+                            <div class="w-1/4 bg-luxury-blue/30 h-[50%] rounded-t-sm"></div>
+                            <div class="w-1/4 bg-luxury-blue h-full rounded-t-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative Elements -->
+                <div class="holo-ring w-48 h-48 -top-16 -right-16 animate-spin-slow"></div>
+                <div class="holo-ring w-32 h-32 -bottom-10 -left-10 animate-spin-slow-reverse border-luxury-blue/40"></div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <span class="text-xs tracking-widest text-silver mb-4 uppercase">Explorar</span>
+            <div class="line-accent"></div>
+        </div>
+    </section>
+
+    <!-- 2. PROPUESTA Y RESULTADO (Interactive Holographic Chamber) -->
+    <section id="que-hacemos-section" class="snap-start py-32 px-8 relative z-10 border-t border-white/5 bg-luxury-black overflow-hidden transition-all duration-1000">
+        
+        <style>
+            @keyframes gridPan {
+                0% { transform: rotateX(75deg) translateY(0); }
+                100% { transform: rotateX(75deg) translateY(60px); }
+            }
+            @keyframes particlesUp {
+                0% { background-position: 0 0; }
+                100% { background-position: 0 -60px; }
+            }
+            .holo-chamber {
+                --module-color: #00f0ff;
+            }
+        </style>
+
+        <!-- THE "VIDEO" BACKGROUND CHAMBER -->
+        <!-- Fallback Video Tag (Can be replaced by local MP4s) -->
+        <video id="interactive-video" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-[-4] opacity-20 mix-blend-screen transition-all duration-700">
+            <!-- Video genérico tecnológico (Data Center). El cliente puede cambiar el src por un video local -->
+            <source src="https://cdn.pixabay.com/video/2020/05/24/40061-424681650_large.mp4" type="video/mp4">
+        </video>
+
+        <!-- Dynamic CSS Video-Hologram layer -->
+        <div class="absolute inset-0 z-[-3] overflow-hidden perspective-1000 holo-chamber transition-colors duration-700" id="holo-chamber-bg">
+            <!-- Dynamic Grid Floor -->
+            <div class="absolute bottom-[-50%] left-[-50%] w-[200%] h-[200%] opacity-30 transition-all duration-700"
+                 style="background-image: linear-gradient(to right, var(--module-color) 1px, transparent 1px), linear-gradient(to bottom, var(--module-color) 1px, transparent 1px); background-size: 60px 60px; transform: rotateX(75deg); animation: gridPan 4s linear infinite;">
+            </div>
+            
+            <!-- Floating Data Particles -->
+            <div class="absolute inset-0 opacity-50 transition-colors duration-700 mix-blend-screen" 
+                 style="background-image: radial-gradient(circle at center, var(--module-color) 1px, transparent 2px); background-size: 40px 40px; animation: particlesUp 5s linear infinite;"></div>
+
+            <!-- Central Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full blur-[150px] opacity-20 transition-all duration-700" style="background-color: var(--module-color);"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-20 reveal-element">
+                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold" id="que-hacemos-subtitle">¿Qué Hacemos?</p>
+                <h2 class="text-4xl md:text-5xl font-display font-light tracking-wide leading-relaxed">
+                    Convertimos negocios tradicionales en <br>
+                    <span class="text-gradient font-bold transition-all duration-500" id="que-hacemos-title" style="background-image: linear-gradient(to right, #ffffff, var(--module-color, #00f0ff)); -webkit-background-clip: text;">máquinas de eficiencia.</span>
+                </h2>
+            </div>
+            
+            <!-- Floating Data points (Interactive) -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center reveal-element">
+                <div class="glass-card p-6 rounded-xl transition-all duration-500 cursor-pointer hover:scale-110 hover:-translate-y-4 hover:bg-luxury-black/90 border border-transparent module-card" data-color="#eab308">
+                    <div class="text-3xl mb-3 transition-colors duration-500 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" style="color: #eab308;">⚡</div>
+                    <h4 class="text-sm font-bold text-white mb-2">Automatización</h4>
+                    <p class="text-xs text-silver">Procesos operativos al instante.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl transition-all duration-500 cursor-pointer hover:scale-110 hover:-translate-y-4 hover:bg-luxury-black/90 border border-transparent module-card" data-color="#00f0ff">
+                    <div class="text-3xl mb-3 transition-colors duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]" style="color: #00f0ff;">⏱</div>
+                    <h4 class="text-sm font-bold text-white mb-2">Tiempo Real</h4>
+                    <p class="text-xs text-silver">Administración sin demoras.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl transition-all duration-500 cursor-pointer hover:scale-110 hover:-translate-y-4 hover:bg-luxury-black/90 border border-transparent module-card" data-color="#ef4444">
+                    <div class="text-3xl mb-3 transition-colors duration-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]" style="color: #ef4444;">🎯</div>
+                    <h4 class="text-sm font-bold text-white mb-2">Toma de Decisiones</h4>
+                    <p class="text-xs text-silver">Datos críticos a la mano.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl transition-all duration-500 cursor-pointer hover:scale-110 hover:-translate-y-4 hover:bg-luxury-black/90 border border-transparent module-card" data-color="#4ade80">
+                    <div class="text-3xl mb-3 transition-colors duration-500 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" style="color: #4ade80;">📈</div>
+                    <h4 class="text-sm font-bold text-white mb-2">Productividad</h4>
+                    <p class="text-xs text-silver">Incremento y control total.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl transition-all duration-500 cursor-pointer hover:scale-110 hover:-translate-y-4 hover:bg-luxury-black/90 border border-transparent module-card col-span-2 md:col-span-1" data-color="#a855f7">
+                    <div class="text-3xl mb-3 transition-colors duration-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="color: #a855f7;">🔐</div>
+                    <h4 class="text-sm font-bold text-white mb-2">Centralización</h4>
+                    <p class="text-xs text-silver">Información 100% segura.</p>
+                </div>
+            </div>
+
+            <!-- Holographic Output Console -->
+            <div class="mt-12 w-full max-w-5xl mx-auto reveal-element">
+                <div class="glass-card border border-white/10 rounded-xl p-6 relative overflow-hidden transition-all duration-500 flex flex-col justify-center" id="hologram-console" style="min-h: 140px; box-shadow: 0 0 30px rgba(0, 240, 255, 0.05);">
+                    <!-- Top Bar -->
+                    <div class="absolute top-0 left-0 w-full px-4 py-2 flex items-center justify-between border-b border-white/10 bg-black/40">
+                        <div class="flex gap-1.5 items-center">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                            <span class="text-[10px] text-silver tracking-widest uppercase font-mono ml-2 opacity-50 transition-colors duration-300" id="console-header">SYSTEM.IDLE</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-luxury-cyan animate-pulse transition-colors duration-300" id="console-status-dot"></span>
+                        </div>
+                    </div>
+
+                    <!-- Default State -->
+                    <div id="console-default" class="w-full flex flex-col items-center justify-center opacity-50 transition-opacity duration-300 pt-8 absolute inset-0">
+                        <svg class="w-6 h-6 text-silver mb-2 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                        <p class="text-[10px] text-silver tracking-[0.2em] uppercase font-mono">Pase el cursor sobre un módulo para escanear sus características</p>
+                    </div>
+
+                    <!-- Output Content -->
+                    <div id="console-content" class="w-full opacity-0 pointer-events-none transition-all duration-500 transform translate-y-4 pt-8 z-10">
+                        <div class="grid md:grid-cols-3 gap-6 text-left" id="console-bullets">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Script for Interactive Holographic Chamber -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const chamber = document.getElementById('holo-chamber-bg');
+                    const title = document.getElementById('que-hacemos-title');
+                    const video = document.getElementById('interactive-video');
+                    
+                    const consolePanel = document.getElementById('hologram-console');
+                    const consoleHeader = document.getElementById('console-header');
+                    const consoleDot = document.getElementById('console-status-dot');
+                    const consoleDefault = document.getElementById('console-default');
+                    const consoleContent = document.getElementById('console-content');
+                    const consoleBullets = document.getElementById('console-bullets');
+
+                    const defaultColor = '#00f0ff';
+
+                    const moduleData = {
+                        '#eab308': {
+                            title: 'SYSTEM.MODULE_AUTO',
+                            bullets: [
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>', text: 'Eliminación de tareas repetitivas manuales.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>', text: 'Sincronización automática de bases de datos.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>', text: 'Reducción de margen de error humano al 0%.' }
+                            ]
+                        },
+                        '#00f0ff': {
+                            title: 'SYSTEM.MODULE_TIME',
+                            bullets: [
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>', text: 'Monitoreo de operación en el segundo exacto.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>', text: 'Reportes y métricas actualizadas al instante.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>', text: 'Acceso a inventarios y ventas 24/7.' }
+                            ]
+                        },
+                        '#ef4444': {
+                            title: 'SYSTEM.MODULE_DECISION',
+                            bullets: [
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>', text: 'Visualización de datos críticos y tendencias.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>', text: 'Proyección de crecimiento y predicción.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>', text: 'Control absoluto sobre pérdidas y ganancias.' }
+                            ]
+                        },
+                        '#4ade80': {
+                            title: 'SYSTEM.MODULE_PROD',
+                            bullets: [
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>', text: 'Gestión eficiente del personal y recursos.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>', text: 'Reducción de cuellos de botella operativos.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>', text: 'Aceleración en la entrega de resultados.' }
+                            ]
+                        },
+                        '#a855f7': {
+                            title: 'SYSTEM.MODULE_SECURE',
+                            bullets: [
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>', text: 'Datos respaldados y cifrados en la nube.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>', text: 'Toda tu empresa en una sola plataforma.' },
+                                { icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>', text: 'Niveles de acceso y permisos por usuario.' }
+                            ]
+                        }
+                    };
+
+                    document.querySelectorAll('.module-card').forEach(card => {
+                        card.addEventListener('mouseenter', function() {
+                            const color = this.getAttribute('data-color');
+                            const data = moduleData[color];
+                            
+                            // Visual environment updates
+                            chamber.style.setProperty('--module-color', color);
+                            title.style.backgroundImage = `linear-gradient(to right, #ffffff, ${color})`;
+                            this.style.borderColor = color;
+                            this.style.boxShadow = `0 0 40px ${color}40`;
+                            video.style.filter = `drop-shadow(0 0 20px ${color})`;
+                            video.style.opacity = '0.5';
+
+                            // Console updates
+                            consolePanel.style.boxShadow = `0 0 30px ${color}30`;
+                            consolePanel.style.borderColor = `${color}50`;
+                            consoleHeader.innerText = data.title;
+                            consoleHeader.style.color = color;
+                            consoleHeader.style.opacity = '1';
+                            consoleDot.style.backgroundColor = color;
+                            
+                            // Hide default, show content
+                            consoleDefault.style.opacity = '0';
+                            
+                            // Build bullets html
+                            let html = '';
+                            data.bullets.forEach((b, i) => {
+                                html += `
+                                    <div class="flex items-start gap-3 transform transition-all duration-300" style="transition-delay: ${i * 100}ms;">
+                                        <div class="mt-1" style="color: ${color};">${b.icon}</div>
+                                        <p class="text-xs font-light text-silver leading-relaxed">${b.text}</p>
+                                    </div>
+                                `;
+                            });
+                            consoleBullets.innerHTML = html;
+                            
+                            setTimeout(() => {
+                                consoleContent.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+                            }, 50);
+                        });
+
+                        card.addEventListener('mouseleave', function() {
+                            // Reset environment
+                            chamber.style.setProperty('--module-color', defaultColor);
+                            title.style.backgroundImage = `linear-gradient(to right, #ffffff, ${defaultColor})`;
+                            this.style.borderColor = 'transparent';
+                            this.style.boxShadow = 'none';
+                            video.style.filter = 'none';
+                            video.style.opacity = '0.2';
+
+                            // Reset console
+                            consolePanel.style.boxShadow = `0 0 30px rgba(0, 240, 255, 0.05)`;
+                            consolePanel.style.borderColor = `rgba(255,255,255,0.1)`;
+                            consoleHeader.innerText = 'SYSTEM.IDLE';
+                            consoleHeader.style.color = '';
+                            consoleHeader.style.opacity = '0.5';
+                            consoleDot.style.backgroundColor = '';
+                            
+                            consoleContent.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                            setTimeout(() => {
+                                consoleDefault.style.opacity = '0.5';
+                            }, 300);
+                        });
+                    });
+                });
+            </script>
+
+            <!-- Resultado final glowing box -->
+            <div class="mt-24 p-1 rounded-2xl bg-gradient-to-r from-luxury-blue/30 via-luxury-cyan/50 to-luxury-blue/30 animate-pulse-glow reveal-element">
+                <div class="bg-luxury-black rounded-xl p-10 md:p-16 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('abstract_bg.png')] opacity-10 bg-cover mix-blend-screen"></div>
+                    <h3 class="text-2xl md:text-3xl font-display text-white mb-8 relative z-10">El Resultado Final es un negocio:</h3>
+                    <div class="flex flex-wrap justify-center gap-4 relative z-10">
+                        <span class="px-6 py-2 border border-luxury-cyan/40 rounded-full text-luxury-cyan text-sm uppercase tracking-widest font-bold">Profesional</span>
+                        <span class="px-6 py-2 border border-luxury-cyan/40 rounded-full text-luxury-cyan text-sm uppercase tracking-widest font-bold">Automatizado</span>
+                        <span class="px-6 py-2 border border-luxury-cyan/40 rounded-full text-luxury-cyan text-sm uppercase tracking-widest font-bold">Controlado</span>
+                        <span class="px-6 py-2 border border-luxury-cyan/40 rounded-full text-luxury-cyan text-sm uppercase tracking-widest font-bold">Competitivo</span>
+                        <span class="px-6 py-2 border border-luxury-cyan/40 rounded-full text-luxury-cyan text-sm uppercase tracking-widest font-bold">Listo para Crecer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. EL CAOS DEL PAPEL (Problema/Solución - Enhanced 3D) -->
+    <section id="problema-solucion-section" class="snap-start py-32 px-8 relative z-10 border-y border-white/5 bg-luxury-black overflow-hidden transition-all duration-1000">
+        
+        <!-- Dynamic Split Background -->
+        <div class="absolute inset-0 z-[-2] flex transition-all duration-700" id="split-bg-container">
+            <!-- Left Side: Chaos/Problem -->
+            <div id="bg-chaos" class="w-1/2 h-full relative overflow-hidden transition-all duration-700 opacity-20" style="background: radial-gradient(circle at right, rgba(239,68,68,0.1), transparent);">
+                <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, rgba(239,68,68,0.05) 0px, rgba(239,68,68,0.05) 2px, transparent 2px, transparent 10px); animation: moveGridLeft 10s linear infinite;"></div>
+                <div class="absolute inset-0 bg-red-500/5 mix-blend-overlay animate-pulse-glow" style="filter: contrast(150%) brightness(80%);"></div>
+            </div>
+            <!-- Right Side: Order/Solution -->
+            <div id="bg-order" class="w-1/2 h-full relative overflow-hidden transition-all duration-700 opacity-20" style="background: radial-gradient(circle at left, rgba(0,240,255,0.1), transparent);">
+                <div class="absolute inset-0" style="background-image: linear-gradient(to right, rgba(0,240,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,240,255,0.15) 1px, transparent 1px); background-size: 50px 50px; transform: perspective(500px) rotateX(60deg); animation: moveGridRight 10s linear infinite;"></div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes moveGridLeft { 0% { background-position: 0 0; } 100% { background-position: 50px 50px; } }
+            @keyframes moveGridRight { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
+            
+            /* Flawless Bullet Transition (No Layout Shift) */
+            .bullet-container { position: relative; width: 1.25rem; height: 1.25rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+            .bullet-dot { position: absolute; width: 0.5rem; height: 0.5rem; border-radius: 50%; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+            .bullet-icon { position: absolute; width: 1.25rem; height: 1.25rem; opacity: 0; transform: scale(0.5) rotate(-10deg); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+            .card-wrapper:hover .bullet-dot { opacity: 0; transform: scale(0); }
+            .card-wrapper:hover .bullet-icon { opacity: 1; transform: scale(1) rotate(0); }
+            
+            /* Tablet Frame 3D Effects - Optimized for performance and anti-aliasing */
+            .tablet-frame { 
+                transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.8s ease; 
+                transform-style: preserve-3d; 
+                will-change: transform;
+                backface-visibility: hidden;
+            }
+            .card-wrapper-left:hover .tablet-frame { 
+                transform: perspective(1200px) rotateX(8deg) rotateY(4deg) scale(1.02); 
+                box-shadow: -20px 40px 60px -15px rgba(239, 68, 68, 0.15), 0 0 40px rgba(0,0,0,0.8);
+            }
+            .card-wrapper-right:hover .tablet-frame { 
+                transform: perspective(1200px) rotateX(8deg) rotateY(-4deg) scale(1.02); 
+                box-shadow: 20px 40px 60px -15px rgba(0, 240, 255, 0.15), 0 0 40px rgba(0,0,0,0.8);
+            }
+            
+            /* High-Quality 3D SVG Reveal */
+            .icon-3d { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.8) translateZ(-50px); 
+                transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+                pointer-events: none; 
+                will-change: transform, opacity;
+            }
+            .card-wrapper:hover .icon-3d { 
+                opacity: 1; 
+                transform: translateY(0) scale(1) translateZ(50px); 
+            }
+        </style>
+
+        <div class="max-w-6xl mx-auto relative perspective z-10">
+            <!-- Subtle Hover Instruction -->
+            <div class="flex justify-center w-full mb-12 relative z-50">
+                <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-luxury-cyan/10 border border-luxury-cyan/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,240,255,0.3)] animate-bounce">
+                    <svg class="w-5 h-5 text-luxury-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                    <span class="text-xs md:text-sm tracking-[0.2em] uppercase font-bold text-white drop-shadow-[0_0_5px_rgba(0,240,255,0.8)]">Pasa el cursor sobre las tarjetas</span>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 md:gap-20 relative mt-4 pb-32">
+                
+                <!-- Problema (Tablet 1) -->
+                <div class="relative w-full card-wrapper card-wrapper-left z-10 reveal-element dashboard-3d animate-float" style="animation-delay: 0.5s;" onmouseenter="document.getElementById('bg-chaos').style.width='60%'; document.getElementById('bg-order').style.width='40%'; document.getElementById('bg-chaos').style.opacity='0.4';" onmouseleave="document.getElementById('bg-chaos').style.width='50%'; document.getElementById('bg-order').style.width='50%'; document.getElementById('bg-chaos').style.opacity='0.2';">
+                    
+                    <!-- Tablet Hardware Frame -->
+                    <div class="p-2 bg-[#1a1c23] rounded-[2.5rem] border border-white/5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
+                        <!-- Camera Notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-5 md:h-6 bg-[#0a0a0f] rounded-b-xl flex items-center justify-center gap-2 z-30 border-b border-x border-white/5 shadow-inner">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
+                            <div class="w-1 h-1 rounded-full bg-blue-500/60 shadow-[0_0_6px_rgba(59,130,246,0.9)]"></div>
+                        </div>
+
+                        <!-- Card Screen -->
+                        <div class="bg-[#050505] p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen">
+                            <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 right-0 w-48 h-48 bg-red-500/10 rounded-full blur-[80px] transition-all duration-500" style="opacity: 0.5;"></div>
+                            
+                            <!-- Center Core -->
+                            <div class="text-center z-10 transition-all duration-700 group-hover/screen:scale-75 group-hover/screen:opacity-20 flex flex-col items-center justify-center pointer-events-none">
+                                <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-red-500/30 bg-red-500/10 flex items-center justify-center text-red-500 text-3xl md:text-4xl font-bold shadow-[0_0_30px_rgba(239,68,68,0.3)] mb-6">✕</div>
+                                <h3 class="text-lg md:text-2xl uppercase tracking-[0.2em] text-white">El Problema de Hoy</h3>
+                                <p class="text-red-500/50 text-xs tracking-widest mt-4 animate-pulse">ESCANEANDO SISTEMA...</p>
+                            </div>
+
+                            <!-- Holographic Floating Cards -->
+                            <!-- Card 1: Top Left -->
+                            <div class="absolute top-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[50ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Papel/Excel</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Manejas información crítica en papel o Excel.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2: Top Right -->
+                            <div class="absolute top-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[150ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pérdida Datos</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Pierdes datos importantes del día a día.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Bottom Left -->
+                            <div class="absolute bottom-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[250ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Visibilidad Nula</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">No tienes control ni visibilidad de tu operación.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Bottom Right -->
+                            <div class="absolute bottom-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[350ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Procesos Lentos</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Dependes de procesos manuales y con error.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Authentic SVG 3D Icon Reveal -->
+                    <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 icon-3d z-20">
+                        <svg class="w-32 h-32 text-red-500 filter drop-shadow-[0_15px_25px_rgba(239,68,68,0.6)] animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                            <path d="M12 12v9"></path>
+                            <path d="m8 17 4 4 4-4"></path>
+                            <path d="m15 10-3-3-3 3"></path>
+                            <circle cx="12" cy="12" r="10" stroke-opacity="0.2" fill="rgba(239,68,68,0.1)"></circle>
+                            <path d="M8 12h8" stroke-dasharray="2 2" stroke-opacity="0.5"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Solucion ISMO (Tablet 2) -->
+                <div class="relative w-full card-wrapper card-wrapper-right z-10 reveal-element dashboard-3d animate-float-delayed" onmouseenter="document.getElementById('bg-order').style.width='60%'; document.getElementById('bg-chaos').style.width='40%'; document.getElementById('bg-order').style.opacity='0.6';" onmouseleave="document.getElementById('bg-order').style.width='50%'; document.getElementById('bg-chaos').style.width='50%'; document.getElementById('bg-order').style.opacity='0.2';">
+                    
+                    <!-- Tablet Hardware Frame -->
+                    <div class="p-2 bg-[#1a1c23] rounded-[2.5rem] border border-white/5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
+                        <!-- Camera Notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-5 md:h-6 bg-[#0a0a0f] rounded-b-xl flex items-center justify-center gap-2 z-30 border-b border-x border-white/5 shadow-inner">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
+                            <div class="w-1 h-1 rounded-full bg-blue-500/60 shadow-[0_0_6px_rgba(59,130,246,0.9)]"></div>
+                        </div>
+
+                        <!-- Card Screen -->
+                        <div class="bg-[#050505] p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen">
+                            <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none"></div>
+                            <div class="absolute top-0 left-0 w-64 h-64 bg-luxury-cyan/10 rounded-full blur-[100px] transition-all duration-500" style="opacity: 0.5;"></div>
+                            
+                            <!-- Center Core -->
+                            <div class="text-center z-10 transition-all duration-700 group-hover/screen:scale-75 group-hover/screen:opacity-20 flex flex-col items-center justify-center pointer-events-none">
+                                <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-luxury-cyan/50 bg-luxury-cyan/20 flex items-center justify-center text-luxury-cyan text-3xl md:text-4xl font-bold shadow-[0_0_30px_rgba(0,240,255,0.3)] mb-6">✓</div>
+                                <h3 class="text-lg md:text-2xl uppercase tracking-[0.2em] text-white">La Solución ISMO</h3>
+                                <p class="text-luxury-cyan/50 text-xs tracking-widest mt-4 animate-pulse">SISTEMA OPTIMIZADO</p>
+                            </div>
+
+                            <!-- Holographic Floating Cards -->
+                            <!-- Card 1: Top Left -->
+                            <div class="absolute top-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[50ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Digitalización</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Digitalizamos y optimizamos absolutamente TODO.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2: Top Right -->
+                            <div class="absolute top-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[150ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">A La Medida</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Desarrollo 100% personalizado a tu operación.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Bottom Left -->
+                            <div class="absolute bottom-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[250ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pragmatismo</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Soluciones prácticas listas para implementar.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Bottom Right -->
+                            <div class="absolute bottom-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[350ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                    <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
+                                        <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pago Único</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed"><strong class="text-luxury-cyan drop-shadow-[0_0_5px_rgba(0,240,255,0.8)] font-bold">Sin rentas.</strong> Tu sistema, tus reglas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Authentic SVG 3D Icon Reveal -->
+                    <div class="absolute -bottom-24 left-1/2 -translate-x-1/2 icon-3d z-20">
+                        <svg class="w-32 h-32 text-luxury-cyan filter drop-shadow-[0_15px_25px_rgba(0,240,255,0.5)] animate-float-delayed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+                            <path d="M15 9h.01"></path>
+                            <circle cx="15" cy="9" r="1.5" fill="currentColor"></circle>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TECNOLOGÍA (New Section - Animated Hologram Tech Stack) -->
+    <section class="snap-start py-32 relative px-8 overflow-hidden bg-luxury-black border-b border-white/5">
+        <style>
+            @keyframes border-spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+            .rgb-border-container { position: relative; overflow: hidden; border-radius: 1.5rem; z-index: 10; padding: 2px; }
+            .rgb-border-container::before {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
+                background: conic-gradient(transparent, transparent, transparent, #ff007f, #00f0ff, #ff007f);
+                transform: translate(-50%, -50%); animation: border-spin 4s linear infinite; z-index: -2;
+            }
+            .rgb-inner-content {
+                background: rgba(5,5,5,0.85); backdrop-filter: blur(16px);
+                border-radius: calc(1.5rem - 2px); width: 100%; height: 100%; position: relative; z-index: -1; padding: 2rem;
+            }
+        </style>
+
+        <div class="absolute -right-[20vw] top-0 w-[50vw] h-[100%] opacity-20 pointer-events-none mix-blend-screen animate-pulse-glow">
+            <img src="abstract_bg.png" alt="Tech" class="w-full h-full object-cover">
+        </div>
+
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <!-- Left Side: Pink Glowing Core & RGB Animated Border -->
+            <div class="reveal-element relative">
+                <!-- Pink LED Glow "Thinking" Effect Behind Left Side -->
+                <div class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-[20%] flex items-center justify-center z-[-1] opacity-60">
+                    <div class="absolute w-[400px] h-[400px] rounded-full border-2 border-pink-500/20 animate-spin-slow shadow-[0_0_50px_rgba(255,0,127,0.15)]"></div>
+                    <div class="absolute w-[300px] h-[300px] rounded-full border border-pink-400/30 animate-spin-slow-reverse"></div>
+                    <div class="absolute w-[150px] h-[150px] bg-pink-500 rounded-full filter blur-[70px] animate-pulse-glow"></div>
+                </div>
+
+                <!-- Animated RGB Border Container -->
+                <div class="rgb-border-container shadow-[0_0_40px_rgba(255,0,127,0.1)]">
+                    <div class="rgb-inner-content">
+                        <p class="text-xs uppercase tracking-[0.3em] text-pink-500 mb-4 font-bold drop-shadow-[0_0_8px_rgba(255,0,127,0.6)]">Infraestructura</p>
+                        <h2 class="text-4xl md:text-5xl font-display font-light mb-8 leading-tight">Tecnología de punta <br>en la palma de tu mano.</h2>
+                        <div class="space-y-4" onmouseleave="resetTechShowcase()">
+                            <div class="flex items-start gap-4 group cursor-pointer transition-all hover:bg-white/5 p-4 rounded-xl border border-transparent hover:border-pink-500/20" onmouseenter="showTechHologram('tech-icon-pwa')">
+                                <div class="text-pink-500 text-2xl mt-1 filter drop-shadow-[0_0_8px_rgba(255,0,127,0.5)] group-hover:scale-110 transition-transform">📱</div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1 group-hover:text-pink-400 transition-colors">APP WEB PWA</h4>
+                                    <p class="text-silver font-light text-sm">No requiere instalación. Acceso total desde cualquier celular, tablet o computadora.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 group cursor-pointer transition-all hover:bg-white/5 p-4 rounded-xl border border-transparent hover:border-pink-500/20" onmouseenter="showTechHologram('tech-icon-db')">
+                                <div class="text-pink-500 text-2xl mt-1 filter drop-shadow-[0_0_8px_rgba(255,0,127,0.5)] group-hover:scale-110 transition-transform">☁️</div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1 group-hover:text-pink-400 transition-colors">Base de Datos en la Nube</h4>
+                                    <p class="text-silver font-light text-sm">Respaldo automático y seguridad militar. Tu información disponible 24/7 en cualquier lugar.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 group cursor-pointer transition-all hover:bg-white/5 p-4 rounded-xl border border-transparent hover:border-pink-500/20" onmouseenter="showTechHologram('tech-icon-ux')">
+                                <div class="text-pink-500 text-2xl mt-1 filter drop-shadow-[0_0_8px_rgba(255,0,127,0.5)] group-hover:scale-110 transition-transform">🚀</div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1 group-hover:text-pink-400 transition-colors">Interfaces Intuitivas</h4>
+                                    <p class="text-silver font-light text-sm">Diseño UX/UI moderno para que tu equipo lo domine en minutos sin curvas de aprendizaje.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reveal-element relative h-[400px] flex items-center justify-center">
+                <!-- Abstract 3D Representation of Cloud Tech -->
+                <div class="absolute w-[300px] h-[300px] rounded-full border-2 border-luxury-cyan/30 animate-spin-slow shadow-[0_0_50px_rgba(0,240,255,0.2)]"></div>
+                <div class="absolute w-[200px] h-[200px] rounded-full border border-luxury-blue/50 animate-spin-slow-reverse"></div>
+                <div class="absolute w-[100px] h-[100px] bg-luxury-cyan rounded-full filter blur-xl animate-pulse-glow"></div>
+                
+                <!-- Image Core -->
+                <img id="tech-img-core" src="tech_core.png" class="absolute w-48 h-48 rounded-full object-cover mix-blend-screen animate-float transition-all duration-700 opacity-100 scale-100">
+                
+                <!-- Holographic Icon 1: APP WEB PWA -->
+                <div id="tech-icon-pwa" class="absolute inset-0 flex items-center justify-center transition-all duration-700 opacity-0 scale-50 pointer-events-none">
+                    <svg class="w-24 h-24 text-luxury-cyan filter drop-shadow-[0_15px_25px_rgba(0,240,255,0.8)] animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+
+                <!-- Holographic Icon 2: NUBE -->
+                <div id="tech-icon-db" class="absolute inset-0 flex items-center justify-center transition-all duration-700 opacity-0 scale-50 pointer-events-none">
+                    <svg class="w-24 h-24 text-luxury-cyan filter drop-shadow-[0_15px_25px_rgba(0,240,255,0.8)] animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                    </svg>
+                </div>
+
+                <!-- Holographic Icon 3: INTERFACES -->
+                <div id="tech-icon-ux" class="absolute inset-0 flex items-center justify-center transition-all duration-700 opacity-0 scale-50 pointer-events-none">
+                    <svg class="w-24 h-24 text-luxury-cyan filter drop-shadow-[0_15px_25px_rgba(0,240,255,0.8)] animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showTechHologram(id) {
+                document.getElementById('tech-img-core').style.opacity = '0';
+                document.getElementById('tech-img-core').style.transform = 'scale(0.8)';
+                
+                ['tech-icon-pwa', 'tech-icon-db', 'tech-icon-ux'].forEach(iconId => {
+                    document.getElementById(iconId).style.opacity = '0';
+                    document.getElementById(iconId).style.transform = 'scale(0.5)';
+                });
+
+                document.getElementById(id).style.opacity = '1';
+                document.getElementById(id).style.transform = 'scale(1)';
+            }
+
+            function resetTechShowcase() {
+                document.getElementById('tech-img-core').style.opacity = '1';
+                document.getElementById('tech-img-core').style.transform = 'scale(1)';
+                
+                ['tech-icon-pwa', 'tech-icon-db', 'tech-icon-ux'].forEach(iconId => {
+                    document.getElementById(iconId).style.opacity = '0';
+                    document.getElementById(iconId).style.transform = 'scale(0.5)';
+                });
+            }
+        </script>
+    </section>
+
+    <!-- 5. QUÉ INCLUYEN NUESTROS SISTEMAS (All Modules Added) -->
+    <section id="modulos" class="snap-start py-32 relative px-8 overflow-hidden bg-luxury-gray/20">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-[-2] opacity-10 mix-blend-screen pointer-events-none animate-pan-bg">
+            <img src="tech_core.png" alt="Tech Core" class="w-full h-full object-cover">
+        </div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center reveal-element mb-20">
+                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold">Módulos Según Tu Giro</p>
+                <h2 class="text-4xl md:text-6xl font-display font-light">Ecosistema Completo.</h2>
+            </div>
+
+            <!-- 8 Modules Grid with Individual RGB LED Borders -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Style for RGB Cards -->
+                <style>
+                    .rgb-module-card {
+                        position: relative;
+                        overflow: hidden;
+                        border-radius: 1.5rem;
+                        padding: 2px;
+                        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+                        background: rgba(255,255,255,0.05);
+                    }
+                    .rgb-module-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 300%;
+                        height: 300%;
+                        background: conic-gradient(
+                            transparent, 
+                            transparent, 
+                            transparent, 
+                            var(--module-color-1), 
+                            var(--module-color-2), 
+                            var(--module-color-1)
+                        );
+                        transform: translate(-50%, -50%);
+                        animation: border-spin 5s linear infinite;
+                        z-index: 0;
+                        opacity: 0.4;
+                        transition: opacity 0.5s ease;
+                    }
+                    .rgb-module-card:hover::before {
+                        opacity: 1;
+                        animation-duration: 2s;
+                    }
+                    .rgb-module-card:hover {
+                        transform: translateY(-10px) scale(1.02);
+                        box-shadow: 0 20px 40px -10px var(--module-glow);
+                    }
+                    .rgb-module-inner {
+                        position: relative;
+                        z-index: 10;
+                        background: rgba(10, 14, 23, 0.95);
+                        backdrop-filter: blur(20px);
+                        border-radius: calc(1.5rem - 2px);
+                        padding: 2.5rem 2rem;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                    }
+                </style>
+
+                <!-- Item 1: CRM (Cyan) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #00f0ff; --module-color-2: #0047ff; --module-glow: rgba(0,240,255,0.3); transition-delay: 0.1s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-luxury-cyan/10 border border-luxury-cyan/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(0,240,255,0.2)]">👥</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Gestión de Clientes</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Administración y seguimiento inteligente de prospectos y clientes recurrentes.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Sales (Gold) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #fbbf24; --module-color-2: #d97706; --module-glow: rgba(251,191,36,0.3); transition-delay: 0.2s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(251,191,36,0.2)]">💰</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Control de Ventas</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Registro preciso, cotizaciones express y control financiero automatizado.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3: Agenda (Emerald) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #34d399; --module-color-2: #059669; --module-glow: rgba(52,211,153,0.3); transition-delay: 0.3s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(52,211,153,0.2)]">📅</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Agenda / Citas</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Organización visual de tiempos. Notificaciones automáticas.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4: Inventory (Orange) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #fb923c; --module-color-2: #ea580c; --module-glow: rgba(251,146,60,0.3); transition-delay: 0.4s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-orange-500/10 border border-orange-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(251,146,60,0.2)]">📦</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Inventarios</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Trazabilidad total de productos, alertas de stock mínimo y mermas.</p>
+                    </div>
+                </div>
+
+                <!-- Item 5: Metrics (Indigo) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #818cf8; --module-color-2: #4f46e5; --module-glow: rgba(129,140,248,0.3); transition-delay: 0.5s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(129,140,248,0.2)]">📊</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Métricas Pro</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Dashboards interactivos con KPI's críticos de rendimiento y utilidad.</p>
+                    </div>
+                </div>
+
+                <!-- Item 6: Employees (Pink) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #f472b6; --module-color-2: #db2777; --module-glow: rgba(244,114,182,0.3); transition-delay: 0.6s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-pink-500/10 border border-pink-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(244,114,182,0.2)]">👨‍💼</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Staff Management</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Control de asistencias, cálculo de comisiones y KPIs por colaborador.</p>
+                    </div>
+                </div>
+
+                <!-- Item 7: History (Silver) -->
+                <div class="rgb-module-card reveal-element" style="--module-color-1: #e5e7eb; --module-color-2: #9ca3af; --module-glow: rgba(229,231,235,0.3); transition-delay: 0.7s;">
+                    <div class="rgb-module-inner">
+                        <div class="w-12 h-12 mb-6 bg-gray-500/10 border border-gray-500/30 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_15px_rgba(229,231,235,0.2)]">🔍</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-white">Auditoría</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Historial imborrable de todas las acciones realizadas en el sistema.</p>
+                    </div>
+                </div>
+
+                <!-- Item 8: App Clients (Rainbow) -->
+                <div class="rgb-module-card reveal-element group/bonus" style="--module-color-1: #ff007f; --module-color-2: #00f0ff; --module-glow: rgba(0,240,255,0.4); transition-delay: 0.8s;">
+                    <div class="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-pink-500 to-luxury-cyan text-black text-[10px] font-black tracking-widest rounded-bl-xl z-20 shadow-lg">BONUS</div>
+                    <div class="rgb-module-inner bg-luxury-black/95">
+                        <div class="w-12 h-12 mb-6 bg-luxury-cyan/20 border border-luxury-cyan/50 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_20px_rgba(0,240,255,0.4)] animate-pulse">🌟</div>
+                        <h3 class="text-xl font-display font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-luxury-cyan">App Clientes</h3>
+                        <p class="text-silver font-light text-sm leading-relaxed">Tu propia App para que tus clientes agenden y vean su historial 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- 5.5 CARRUSEL DE SISTEMAS (Gamified 3D Showcase) -->
+    <section id="carrusel-sistemas" class="snap-start py-32 bg-luxury-black border-b border-white/5 overflow-hidden relative">
+        <!-- Unified Hero-Style Background -->
+        <div class="absolute inset-0 z-[-2] opacity-30">
+            <img src="abstract_bg.png" alt="Tech Background" class="w-full h-full object-cover scale-110 object-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black via-transparent to-luxury-black"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-8 relative z-10">
+            <div class="text-center reveal-element mb-16">
+                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold">Nuestra Suite Premium</p>
+                <h2 class="text-4xl md:text-5xl font-display font-light">Explora Nuestros <span class="text-gradient font-bold">Sistemas.</span></h2>
+                <p class="text-silver mt-4 text-sm max-w-2xl mx-auto">Selecciona un flyer para expandir la información técnica de cada solución.</p>
+            </div>
+
+            <!-- 3D Carousel Container -->
+            <div class="carousel-3d-wrapper relative h-[500px] flex items-center justify-center perspective-[2000px]">
+                <div class="carousel-container relative w-full h-full flex items-center justify-center transition-all duration-700 ease-out" id="app-carousel">
+                    <!-- Complete Suite of 17 Apps -->
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="0" onclick="focusItem(0)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.00.02 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="1" onclick="focusItem(1)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.15.38 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="2" onclick="focusItem(2)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.15.45 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="3" onclick="focusItem(3)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.26.15 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="4" onclick="focusItem(4)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (1).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="5" onclick="focusItem(5)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (2).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="6" onclick="focusItem(6)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (3).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="7" onclick="focusItem(7)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (4).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="8" onclick="focusItem(8)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (5).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="9" onclick="focusItem(9)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (6).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="10" onclick="focusItem(10)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (7).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="11" onclick="focusItem(11)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="12" onclick="focusItem(12)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (1).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="13" onclick="focusItem(13)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (2).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="14" onclick="focusItem(14)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="15" onclick="focusItem(15)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.35 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="16" onclick="focusItem(16)">
+                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
+                            <img src="APPS/Gemini_Generated_Image_i16dgvi16dgvi16d.png" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <button onclick="rotateCarousel(-1)" class="absolute left-4 md:left-10 w-12 h-12 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="rotateCarousel(1)" class="absolute right-4 md:right-10 w-12 h-12 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <style>
+            .carousel-item {
+                transform-style: preserve-3d;
+                will-change: transform, opacity;
+            }
+            .holographic-card {
+                background: rgba(255, 255, 255, 0.03);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+                transition: all 0.5s ease;
+            }
+            .carousel-item.active .holographic-card {
+                border-color: rgba(0, 240, 255, 0.5);
+                box-shadow: 0 0 50px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0, 240, 255, 0.1);
+                transform: scale(1.1);
+            }
+        </style>
+
+        <script>
+            let currentRotationIndex = 0;
+            const items = document.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+
+            function updateCarousel() {
+                items.forEach((item, i) => {
+                    let offset = (i - currentRotationIndex + totalItems) % totalItems;
+                    
+                    // Logic to make it circular and centered
+                    if (offset > totalItems / 2) offset -= totalItems;
+
+                    const absOffset = Math.abs(offset);
+                    const zTranslate = absOffset * -300 - 100;
+                    const xTranslate = offset * 250;
+                    const rotateY = offset * -35;
+                    const opacity = Math.max(0.2, 1 - absOffset * 0.4);
+                    const scale = 1 - absOffset * 0.15;
+
+                    item.style.transform = `translateX(${xTranslate}px) translateZ(${zTranslate}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    item.style.opacity = opacity;
+                    item.style.zIndex = totalItems - absOffset;
+                    
+                    if (offset === 0) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            function rotateCarousel(dir) {
+                currentRotationIndex = (currentRotationIndex + dir + totalItems) % totalItems;
+                updateCarousel();
+            }
+
+            function focusItem(index) {
+                currentRotationIndex = index;
+                updateCarousel();
+            }
+
+            // Initialize
+            updateCarousel();
+        </script>
+    </section>
+
+    <!-- 6. GIROS DE NEGOCIO (Interactive Device Showcase) -->
+    <section id="industrias" class="snap-start py-32 bg-luxury-black border-y border-white/10 overflow-hidden relative">
+        <!-- Unified Hero-Style Background -->
+        <div class="absolute inset-0 z-[-2] opacity-30">
+            <img src="abstract_bg.png" alt="Tech Background" class="w-full h-full object-cover scale-110 object-center animate-pan-bg">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black via-transparent to-luxury-black"></div>
+        </div>
+
+        <!-- High-Density RGB Particle Field -->
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <!-- Dynamic Glowing Orbs for Depth -->
+            <div class="absolute top-[10%] left-[20%] w-[40vw] h-[40vw] bg-luxury-blue/10 rounded-full blur-[120px] animate-pulse-glow"></div>
+            <div class="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] bg-pink-600/10 rounded-full blur-[120px] animate-pulse-glow-delayed"></div>
+            
+            <!-- Particles -->
+            <div class="absolute top-[15%] left-[10%] w-1.5 h-1.5 bg-luxury-cyan rounded-full shadow-[0_0_15px_#00f0ff] animate-float opacity-60"></div>
+            <div class="absolute top-[45%] left-[25%] w-1 h-1 bg-pink-500 rounded-full shadow-[0_0_10px_#ff007f] animate-float-delayed opacity-40"></div>
+            <div class="absolute top-[75%] left-[15%] w-2 h-2 bg-yellow-400 rounded-full shadow-[0_0_20px_#fbbf24] animate-float opacity-50"></div>
+            <div class="absolute top-[25%] left-[45%] w-1 h-1 bg-white rounded-full shadow-[0_0_10px_#fff] animate-float-delayed opacity-70"></div>
+            <div class="absolute top-[55%] left-[55%] w-2.5 h-2.5 bg-luxury-blue rounded-full shadow-[0_0_20px_#0047ff] animate-float opacity-40"></div>
+            <div class="absolute top-[85%] left-[40%] w-1.5 h-1.5 bg-pink-400 rounded-full shadow-[0_0_15px_#f472b6] animate-float-delayed opacity-60"></div>
+            <div class="absolute top-[10%] right-[15%] w-1 h-1 bg-luxury-cyan rounded-full shadow-[0_0_10px_#00f0ff] animate-float opacity-50"></div>
+            <div class="absolute top-[40%] right-[25%] w-2 h-2 bg-yellow-500 rounded-full shadow-[0_0_15px_#fbbf24] animate-float-delayed opacity-60"></div>
+            <div class="absolute top-[70%] right-[10%] w-1.5 h-1.5 bg-pink-500 rounded-full shadow-[0_0_20px_#ff007f] animate-float opacity-40"></div>
+            <!-- Additional Particles -->
+            <div class="absolute top-[33%] left-[12%] w-1 h-1 bg-luxury-cyan rounded-full animate-float opacity-40"></div>
+            <div class="absolute top-[66%] right-[18%] w-1 h-1 bg-pink-400 rounded-full animate-float-delayed opacity-30"></div>
+            <div class="absolute top-[5%] left-[80%] w-1 h-1 bg-white rounded-full animate-float opacity-50"></div>
+            <div class="absolute bottom-[5%] left-[20%] w-1 h-1 bg-yellow-400 rounded-full animate-float-delayed opacity-40"></div>
+            <div class="absolute top-[20%] right-[50%] w-1.5 h-1.5 bg-luxury-blue rounded-full animate-float opacity-30"></div>
+            <div class="absolute top-[60%] right-[45%] w-2 h-2 bg-pink-600 rounded-full animate-float opacity-40"></div>
+            <div class="absolute top-[35%] right-[5%] w-1 h-1 bg-yellow-300 rounded-full animate-float-delayed opacity-60"></div>
+            <div class="absolute top-[80%] left-[60%] w-1.5 h-1.5 bg-luxury-cyan rounded-full animate-float-delayed opacity-50"></div>
+        </div>
+
+        <style>
+            .animate-pulse-glow-delayed {
+                animation: pulseGlow 4s ease-in-out 2s infinite;
+            }
+        </style>
+        <div class="max-w-7xl mx-auto px-8 relative z-10">
+            <div class="text-center reveal-element mb-16">
+                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold">Arquitectura Por Industria</p>
+                <h2 class="text-4xl md:text-5xl font-display font-light">Tecnología para <span class="text-gradient font-bold">cualquier negocio.</span></h2>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12 items-center reveal-element active" style="transition-delay: 0.2s;">
+                <!-- Interactive Tabs -->
+                <div class="w-full lg:w-1/3 space-y-6">
+                    <button onclick="changeIndustry('salud')" id="btn-salud" class="industry-btn w-full text-left px-6 py-6 rounded-2xl border border-luxury-cyan bg-luxury-cyan/10 text-white transition-all duration-500 relative overflow-hidden group shadow-[0_0_30px_rgba(0,240,255,0.15)]">
+                        <div class="absolute left-0 top-0 w-1.5 h-full bg-luxury-cyan shadow-[0_0_15px_#00f0ff]"></div>
+                        <h4 class="text-xl font-bold">Salud & Clínicas</h4>
+                        <p class="text-xs text-silver mt-1">Expedientes clínicos y agendas médicas especializadas.</p>
+                    </button>
+                    <button onclick="changeIndustry('belleza')" id="btn-belleza" class="industry-btn w-full text-left px-6 py-6 rounded-2xl border border-white/10 bg-transparent hover:bg-white/5 text-silver hover:text-white transition-all duration-500 relative overflow-hidden group">
+                        <div class="absolute left-0 top-0 w-1.5 h-full bg-transparent group-hover:bg-pink-500/30 transition-all"></div>
+                        <h4 class="text-xl font-bold">Belleza & Spas</h4>
+                        <p class="text-xs text-silver mt-1">Reservaciones inteligentes y control de comisiones.</p>
+                    </button>
+                    <button onclick="changeIndustry('auto')" id="btn-auto" class="industry-btn w-full text-left px-6 py-6 rounded-2xl border border-white/10 bg-transparent hover:bg-white/5 text-silver hover:text-white transition-all duration-500 relative overflow-hidden group">
+                        <div class="absolute left-0 top-0 w-1.5 h-full bg-transparent group-hover:bg-yellow-500/30 transition-all"></div>
+                        <h4 class="text-xl font-bold">Automotriz</h4>
+                        <p class="text-xs text-silver mt-1">Órdenes de servicio e inventario de refacciones.</p>
+                    </button>
+                    <div class="px-6 py-4 mt-8 glass-card border-white/5 rounded-xl">
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-luxury-cyan mb-3 font-black">Sectores Adicionales</p>
+                        <p class="text-xs font-light text-white/60 leading-relaxed">Restaurantes • Construcción • Escuelas • Eventos • Clubes Deportivos • Gimnasios • Notarías</p>
+                    </div>
+                </div>
+
+                <!-- 3D Device Showcase -->
+                <div class="w-full lg:w-2/3 relative h-[300px] lg:h-[450px] flex justify-center items-center perspective">
+                    <!-- Spinning Holographic Rings -->
+                    <div class="absolute w-[300px] h-[300px] lg:w-[450px] lg:h-[450px] rounded-full border border-luxury-cyan/20 animate-spin-slow pointer-events-none"></div>
+                    <div class="absolute w-[200px] h-[200px] lg:w-[350px] lg:h-[350px] rounded-full border border-luxury-blue/30 animate-spin-slow-reverse pointer-events-none"></div>
+                    
+                    <!-- 3D Dashboard Container -->
+                    <div class="relative w-full max-w-2xl aspect-video dashboard-3d animate-float glass-card overflow-hidden rounded-2xl transition-all duration-500 shadow-[0_0_50px_rgba(0,240,255,0.15)]" id="device-container">
+                        <img id="industry-img" src="ui_salud.png" alt="Interface" class="w-full h-full object-cover opacity-90 transition-opacity duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-luxury-blue/20 to-transparent mix-blend-overlay pointer-events-none"></div>
+                    </div>
+                    
+                    <!-- Floating Tech Elements -->
+                    <div class="absolute -top-6 -right-6 lg:-right-10 glass-card px-4 py-2 rounded-lg animate-float-delayed border-luxury-cyan text-xs font-bold tracking-widest text-luxury-cyan flex items-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.3)]">
+                        <span class="w-2 h-2 rounded-full bg-luxury-cyan animate-pulse"></span>
+                        <span id="floating-badge">MÓDULO CLÍNICO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function changeIndustry(type) {
+                const btns = document.querySelectorAll('.industry-btn');
+                const badge = document.getElementById('floating-badge');
+                const badgeDot = badge.previousElementSibling;
+                const img = document.getElementById('industry-img');
+                const container = document.getElementById('device-container');
+                
+                // Color mapping
+                const themes = {
+                    salud: { color: '#00f0ff', glow: 'rgba(0,240,255,0.2)', badge: 'MÓDULO CLÍNICO' },
+                    belleza: { color: '#ff007f', glow: 'rgba(255,0,127,0.2)', badge: 'AGENDA SPA' },
+                    auto: { color: '#fbbf24', glow: 'rgba(251,191,36,0.2)', badge: 'SERVICIO TÉCNICO' }
+                };
+
+                const theme = themes[type];
+
+                // Update UI Colors
+                btns.forEach(btn => {
+                    btn.classList.remove('text-white', 'shadow-lg', 'bg-opacity-20');
+                    btn.classList.add('border-white/10', 'bg-transparent', 'text-silver');
+                    btn.style.borderColor = '';
+                    btn.style.backgroundColor = '';
+                    btn.style.boxShadow = '';
+                    btn.firstElementChild.style.backgroundColor = 'transparent';
+                    btn.firstElementChild.style.boxShadow = 'none';
+                });
+
+                const activeBtn = document.getElementById(`btn-${type}`);
+                activeBtn.classList.remove('border-white/10', 'text-silver');
+                activeBtn.classList.add('text-white');
+                activeBtn.style.borderColor = theme.color;
+                activeBtn.style.backgroundColor = theme.color + '15'; // 15 is opacity in hex
+                activeBtn.style.boxShadow = `0 0 30px ${theme.glow}`;
+                activeBtn.firstElementChild.style.backgroundColor = theme.color;
+                activeBtn.firstElementChild.style.boxShadow = `0 0 15px ${theme.color}`;
+
+                // Update Showcase
+                img.style.opacity = '0';
+                img.style.transform = 'scale(0.95) translateY(10px)';
+                
+                setTimeout(() => {
+                    img.src = `ui_${type}.png`;
+                    img.style.opacity = '1';
+                    img.style.transform = 'scale(1) translateY(0)';
+                    badge.innerText = theme.badge;
+                    badge.parentElement.style.borderColor = theme.color;
+                    badge.parentElement.style.boxShadow = `0 0 20px ${theme.glow}`;
+                    badgeDot.style.backgroundColor = theme.color;
+                    container.style.shadow = `0 0 50px ${theme.glow}`;
+                }, 300);
+            }
+        </script>
+    </section>
+
+    <!-- 7. MODELO DE TRABAJO (Animated Hologram Box) -->
+    <section class="snap-start py-32 px-8 bg-luxury-gray relative">
+        <div class="max-w-4xl mx-auto reveal-element">
+            <div class="dashboard-3d p-12 lg:p-20 border border-luxury-cyan/20 rounded-3xl relative overflow-hidden glass-card animate-float-slow">
+                <div class="absolute -right-40 -top-40 w-96 h-96 bg-luxury-blue/30 rounded-full blur-[100px]"></div>
+                <div class="absolute -left-40 -bottom-40 w-96 h-96 bg-luxury-cyan/20 rounded-full blur-[100px]"></div>
+                
+                <div class="relative z-10 text-center">
+                    <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-6 font-bold">El Modelo ISMO</p>
+                    <h2 class="text-4xl md:text-5xl font-display font-light mb-12 leading-tight">Transparencia y Control <br><span class="text-gradient font-bold">desde el día uno.</span></h2>
+                    
+                    <div class="flex flex-col md:flex-row justify-center gap-8 md:gap-16 font-light text-white text-lg">
+                        <div class="flex flex-col items-center gap-4 group">
+                            <div class="w-16 h-16 rounded-full bg-luxury-cyan/10 border border-luxury-cyan/50 flex items-center justify-center text-luxury-cyan text-2xl group-hover:scale-110 group-hover:bg-luxury-cyan group-hover:text-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">💲</div>
+                            <span class="text-sm tracking-widest uppercase">Pago Único</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-4 group">
+                            <div class="w-16 h-16 rounded-full bg-luxury-cyan/10 border border-luxury-cyan/50 flex items-center justify-center text-luxury-cyan text-2xl group-hover:scale-110 group-hover:bg-luxury-cyan group-hover:text-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">⚙️</div>
+                            <span class="text-sm tracking-widest uppercase">Listo para operar</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-4 group">
+                            <div class="w-16 h-16 rounded-full bg-luxury-cyan/10 border border-luxury-cyan/50 flex items-center justify-center text-luxury-cyan text-2xl group-hover:scale-110 group-hover:bg-luxury-cyan group-hover:text-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">🎓</div>
+                            <span class="text-sm tracking-widest uppercase">Capacitación</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-4 group">
+                            <div class="w-16 h-16 rounded-full bg-luxury-cyan/10 border border-luxury-cyan/50 flex items-center justify-center text-luxury-cyan text-2xl group-hover:scale-110 group-hover:bg-luxury-cyan group-hover:text-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)]">🛠️</div>
+                            <span class="text-sm tracking-widest uppercase">Soporte Directo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. CTA FINAL -->
+    <section class="snap-start py-40 px-8 relative flex flex-col items-center text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('abstract_bg.png')] bg-cover bg-center opacity-20 z-[-2] animate-pan-bg"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/80 to-transparent z-[-1]"></div>
+
+        <div class="reveal-element max-w-4xl relative z-10 dashboard-3d p-16 rounded-[3rem] border-luxury-cyan/30 glass-card">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-cyan/10 to-transparent rounded-[3rem] pointer-events-none"></div>
+            
+            <div class="w-24 h-24 mx-auto border-2 border-luxury-cyan rounded-full flex items-center justify-center mb-8 shadow-[0_0_50px_rgba(0,240,255,0.5)] animate-pulse-glow bg-luxury-black">
+                <svg class="w-10 h-10 text-luxury-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-display font-light mb-8">Eleva tu operación.</h2>
+            <p class="text-xl font-light text-silver mb-12 max-w-2xl mx-auto">Lleva tu negocio al siguiente nivel HOY. Solicita tu sistema y obtén control absoluto de tu información y procesos.</p>
+            <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado%20para%20mi%20negocio." target="_blank" class="inline-block px-12 py-5 text-sm uppercase tracking-[0.2em] font-bold luxury-button bg-white text-black hover:bg-transparent hover:text-white transition-colors duration-500 rounded-sm">
+                Contactar vía WhatsApp
+            </a>
+            <p class="mt-8 text-sm font-light text-luxury-cyan tracking-widest">+52 656 122 0244</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 px-8 bg-luxury-black border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-silver font-light tracking-widest uppercase relative z-10">
+        <p>&copy; 2026 Sistemas ISMO Ingeniería.</p>
+        <p class="mt-4 md:mt-0 flex items-center gap-2">
+            Diseñado con precisión <span class="w-2 h-2 rounded-full bg-luxury-cyan animate-pulse"></span>
+        </p>
+    </footer>
+
+    <!-- Reveal Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                let delay = 0;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!entry.target.classList.contains('active')) {
+                            if (!entry.target.style.transitionDelay) {
+                                entry.target.style.transitionDelay = `${delay}ms`;
+                                delay += 150;
+                            }
+                            setTimeout(() => {
+                                entry.target.classList.add('active');
+                            }, 10);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-element').forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <!-- Dynamic RGB Target Cursor -->
+    <div id="rgb-cursor" class="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[999999] flex items-center justify-center transition-opacity duration-300" style="opacity: 0; transform: translate3d(-100px, -100px, 0);">
+        <div class="cursor-scaler relative w-full h-full flex items-center justify-center transition-transform duration-150 ease-out">
+            <!-- Glowing RGB Border / Target -->
+            <div class="absolute inset-0 rounded-full animate-spin-slow" style="background: conic-gradient(from 0deg, transparent, #00f0ff, transparent, #ff007f, transparent); -webkit-mask: radial-gradient(transparent 65%, black 66%); mask: radial-gradient(transparent 65%, black 66%); filter: drop-shadow(0 0 8px rgba(0,240,255,0.8));"></div>
+            <!-- Outer targeting ring -->
+            <div class="absolute inset-0 rounded-full border border-white/20 animate-pulse-glow"></div>
+            <!-- Inner Crosshair / Dot -->
+            <div class="absolute w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_#00f0ff,0_0_20px_#ff007f]"></div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor Logic
+        const rgbCursor = document.getElementById('rgb-cursor');
+        const cursorScaler = rgbCursor.querySelector('.cursor-scaler');
+        let cursorVisible = false;
+
+        // Track Mouse
+        document.addEventListener('mousemove', (e) => {
+            if (!cursorVisible) {
+                rgbCursor.style.opacity = '1';
+                cursorVisible = true;
+            }
+            // Hardware accelerated positioning + Z translation to avoid 3D clipping
+            rgbCursor.style.transform = `translate3d(${e.clientX - 24}px, ${e.clientY - 24}px, 1000px)`;
+        });
+
+        // Hide on leave window
+        document.addEventListener('mouseleave', () => {
+            rgbCursor.style.opacity = '0';
+            cursorVisible = false;
+        });
+
+        // Click interaction
+        document.addEventListener('mousedown', () => {
+            cursorScaler.style.transform = 'scale(0.6)';
+        });
+        document.addEventListener('mouseup', () => {
+            cursorScaler.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>

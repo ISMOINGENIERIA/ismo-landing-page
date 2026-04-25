@@ -1,0 +1,11 @@
+Nombre del negocio: SISTEMAS ISMO INGENIERIA
+Giro del negocio: Desarrollo de Sistemas APP WEB para todo giro de negocio. 
+Servicios o productos principales: Sistemas personalizados.
+Público objetivo: Negocios/Pymes/Clubs
+Ciudad o zona (opcional): Cd. Juarez Chihuahua.
+Diferenciador principal: Creamos sistemas personalizados para cada tipo de negocio, NO SOMOS REVENDEDORES.
+Estilo visual deseado: Super tecnologico y profesional. Que se note nuestra calidad tecnologica.
+Ya tienes la informacion de ISMO en la nueva carpeta ISMO LANDING PAGE FOLDER.
+
+Asi vamos a crear las LANDING Page futuras en su propia carpeta cargaremos toda la info para tener todo
+bien administrado.
