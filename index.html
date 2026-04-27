@@ -165,6 +165,15 @@
             position: absolute;
             pointer-events: none;
         }
+
+        @keyframes pan-bg {
+            0% { transform: scale(1.1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(-1%, -1%); }
+            100% { transform: scale(1.1) translate(0, 0); }
+        }
+        .animate-neon-bg {
+            animation: pan-bg 20s ease-in-out infinite !important;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-luxury-cyan selection:text-black">
@@ -181,18 +190,363 @@
                 <img src="ismo%20logo.png" alt="Sistemas ISMO Logo" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">
                 <div>Sistemas<span class="font-bold text-gradient"> ISMO</span></div>
             </div>
+
+            <!-- Navigation Links Ribbon (All 9 Sections) -->
+            <div class="hidden lg:flex items-center gap-6 xl:gap-8">
+                <a href="#" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Inicio
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#que-hacemos-section" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Propuesta
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#problema-solucion-section" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Problema
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#video-showcase" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Demo
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#tecnologia" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Tecnología
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#modulos" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Ecosistema
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#sistemas" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Suite
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#industrias" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Industrias
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+                <a href="#modelo" class="text-[9px] uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300 relative group">
+                    Modelo
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-luxury-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_8px_#00f0ff]"></span>
+                </a>
+            </div>
+
             <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado" target="_blank" class="hidden md:block text-xs uppercase tracking-[0.15em] font-medium luxury-button px-6 py-3 text-white rounded-sm">
                 Solicitar Sistema
             </a>
         </div>
     </nav>
 
-    <!-- 1. HERO SECTION (Enhanced with Particles and Holograms) -->
+    <!-- 1. HERO SECTION (Enhanced with Instant Background) -->
     <section class="snap-start relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden pt-32 pb-20">
-        <div class="absolute inset-0 z-[-2] opacity-30">
-            <img src="abstract_bg.png" alt="Tech Background" class="w-full h-full object-cover scale-110 object-center">
-            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black/40 via-transparent to-luxury-black"></div>
+        <!-- Static Background for Instant Impression -->
+        <div class="absolute inset-0 z-[-2] bg-black">
+            <img src="hero.png" alt="Hero Background" class="w-full h-full object-cover animate-neon-bg opacity-55">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
         </div>
+
+        <!-- Gradient overlay on top of background -->
+        <div class="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-luxury-black/30 via-transparent to-luxury-black"></div>
+
+        <!-- HOLOGRAPHIC CANVAS BACKGROUND (Particles & Windows only) -->
+        <canvas id="holo-canvas" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+        <style>
+            #holo-canvas { mix-blend-mode: normal; }
+        </style>
+        <script>
+        (function(){
+            const canvas = document.getElementById('holo-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, nodes, windows, particles;
+            const CYAN = '#00F0FF', BLUE = '#0047FF';
+
+            // --- Background handled by HTML layer ---
+            let zoomBase = 1.1, zoomAmp = 0.12, zoomSpeed = 0.0006; 
+
+            function drawBackground(t) {
+                // Background is now handled by HTML/CSS for instant loading
+                ctx.clearRect(0, 0, W, H);
+                // Dark vignette from edges to merge with particles
+                ctx.save();
+                ctx.globalAlpha = 1;
+                const grad = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.9);
+                grad.addColorStop(0, 'transparent');
+                grad.addColorStop(1, 'rgba(2,4,8,0.4)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, W, H);
+                ctx.restore();
+            }
+
+            function resize() {
+                W = canvas.width = canvas.offsetWidth;
+                H = canvas.height = canvas.offsetHeight;
+            }
+
+            // --- Floating Holographic Windows ---
+            function createWindows() {
+                windows = [];
+                const templates = [
+                    { label: 'DASHBOARD', color: CYAN, type: 'bars' },
+                    { label: 'CRM', color: '#7c3aed', type: 'rows' },
+                    { label: 'VENTAS', color: '#22c55e', type: 'chart' },
+                    { label: 'INVENTARIO', color: '#f59e0b', type: 'grid' },
+                    { label: 'REPORTES', color: CYAN, type: 'lines' },
+                    { label: 'CLIENTES', color: '#a855f7', type: 'rows' },
+                    { label: 'AGENDA', color: BLUE, type: 'bars' },
+                ];
+                for (let i = 0; i < 7; i++) {
+                    const t = templates[i];
+                    windows.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        w: 120 + Math.random() * 80,
+                        h: 80 + Math.random() * 60,
+                        vx: (Math.random() - 0.5) * 0.25,
+                        vy: (Math.random() - 0.5) * 0.25,
+                        alpha: 0.15 + Math.random() * 0.3,
+                        color: t.color,
+                        label: t.label,
+                        type: t.type,
+                        phase: Math.random() * Math.PI * 2,
+                        scale: 0.7 + Math.random() * 0.6,
+                    });
+                }
+            }
+
+            // --- Circuit Nodes ---
+            function createNodes() {
+                nodes = [];
+                for (let i = 0; i < 40; i++) {
+                    nodes.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        r: 1 + Math.random() * 2,
+                        color: Math.random() > 0.5 ? CYAN : BLUE,
+                    });
+                }
+            }
+
+            // --- Scan Particles ---
+            function createParticles() {
+                particles = [];
+                for (let i = 0; i < 20; i++) {
+                    particles.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        speed: 0.5 + Math.random() * 1,
+                        length: 30 + Math.random() * 80,
+                        alpha: 0.3 + Math.random() * 0.5,
+                        color: Math.random() > 0.5 ? CYAN : BLUE,
+                    });
+                }
+            }
+
+            function drawWindow(win, t) {
+                const { x, y, w, h, color, label, type, alpha, phase, scale } = win;
+                const pulse = 0.85 + 0.15 * Math.sin(t * 0.001 + phase);
+                const a = alpha * pulse;
+                ctx.save();
+                ctx.globalAlpha = a;
+                ctx.translate(x, y);
+                ctx.scale(scale, scale);
+
+                // Window border
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 8;
+                ctx.strokeRect(0, 0, w, h);
+
+                // Corner accents
+                const cs = 8;
+                ctx.lineWidth = 2;
+                [[0,0],[w,0],[0,h],[w,h]].forEach(([cx,cy]) => {
+                    ctx.beginPath();
+                    ctx.moveTo(cx === 0 ? cx + cs : cx - cs, cy);
+                    ctx.lineTo(cx, cy);
+                    ctx.lineTo(cx, cy === 0 ? cy + cs : cy - cs);
+                    ctx.stroke();
+                });
+
+                // Title bar
+                ctx.fillStyle = color;
+                ctx.globalAlpha = a * 0.15;
+                ctx.fillRect(0, 0, w, 16);
+                ctx.globalAlpha = a;
+
+                // Label
+                ctx.font = 'bold 7px monospace';
+                ctx.fillStyle = color;
+                ctx.shadowBlur = 6;
+                ctx.fillText('■ ' + label, 4, 11);
+
+                // Dots
+                [w-8, w-16, w-24].forEach(dx => {
+                    ctx.beginPath();
+                    ctx.arc(dx, 8, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.globalAlpha = a * 0.6;
+                    ctx.fill();
+                });
+                ctx.globalAlpha = a;
+
+                // Content by type
+                ctx.shadowBlur = 0;
+                const cy2 = 22, cw = w - 8, ch2 = h - 26;
+                if (type === 'bars') {
+                    const bars = 5;
+                    const bw = (cw / bars) - 2;
+                    for (let i = 0; i < bars; i++) {
+                        const bh = (0.3 + 0.7 * Math.abs(Math.sin(t * 0.002 + i + phase))) * ch2;
+                        ctx.fillStyle = color;
+                        ctx.globalAlpha = a * (0.2 + 0.5 * (i / bars));
+                        ctx.fillRect(4 + i * (bw + 2), cy2 + ch2 - bh, bw, bh);
+                    }
+                } else if (type === 'chart') {
+                    ctx.beginPath();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 1.5;
+                    ctx.globalAlpha = a * 0.8;
+                    for (let i = 0; i <= 20; i++) {
+                        const px = 4 + (cw * i / 20);
+                        const py = cy2 + ch2/2 + Math.sin(t * 0.002 + i * 0.5 + phase) * ch2 * 0.35;
+                        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+                    }
+                    ctx.stroke();
+                } else if (type === 'rows') {
+                    for (let i = 0; i < 4; i++) {
+                        ctx.fillStyle = color;
+                        ctx.globalAlpha = a * (0.1 + 0.1 * (i % 2));
+                        ctx.fillRect(4, cy2 + i * (ch2/4 + 1), cw, ch2/4 - 1);
+                        ctx.globalAlpha = a * 0.5;
+                        ctx.fillRect(4, cy2 + i * (ch2/4 + 1), cw * (0.4 + 0.5 * Math.random() * 0.01), 1);
+                    }
+                } else if (type === 'grid') {
+                    const cols = 3, rows = 2;
+                    const gw = (cw - 4) / cols, gh = (ch2 - 4) / rows;
+                    for (let r = 0; r < rows; r++) {
+                        for (let c = 0; c < cols; c++) {
+                            ctx.fillStyle = color;
+                            ctx.globalAlpha = a * (0.1 + 0.15 * Math.abs(Math.sin(t * 0.003 + r + c + phase)));
+                            ctx.fillRect(4 + c * (gw + 2), cy2 + r * (gh + 2), gw, gh);
+                        }
+                    }
+                } else if (type === 'lines') {
+                    for (let i = 0; i < 5; i++) {
+                        const lw = cw * (0.3 + 0.6 * Math.abs(Math.sin(t * 0.001 + i + phase)));
+                        ctx.fillStyle = color;
+                        ctx.globalAlpha = a * 0.4;
+                        ctx.fillRect(4, cy2 + i * (ch2/5 + 1), lw, 2);
+                    }
+                }
+                ctx.restore();
+            }
+
+            function drawNodes(t) {
+                // Draw connections
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            ctx.save();
+                            ctx.globalAlpha = (1 - dist/120) * 0.15;
+                            ctx.strokeStyle = CYAN;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    }
+                }
+                // Draw nodes
+                nodes.forEach(n => {
+                    ctx.save();
+                    ctx.globalAlpha = 0.6;
+                    ctx.fillStyle = n.color;
+                    ctx.shadowColor = n.color;
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                    // Move
+                    n.x += n.vx;
+                    n.y += n.vy;
+                    if (n.x < 0 || n.x > W) n.vx *= -1;
+                    if (n.y < 0 || n.y > H) n.vy *= -1;
+                });
+            }
+
+            function drawParticles() {
+                particles.forEach(p => {
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.strokeStyle = p.color;
+                    ctx.lineWidth = 1;
+                    ctx.shadowColor = p.color;
+                    ctx.shadowBlur = 6;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p.x, p.y - p.length);
+                    ctx.stroke();
+                    ctx.restore();
+                    p.y -= p.speed;
+                    if (p.y + p.length < 0) {
+                        p.y = H + p.length;
+                        p.x = Math.random() * W;
+                    }
+                });
+            }
+
+            let animT = 0;
+            function animate() {
+                animT++;
+                ctx.clearRect(0, 0, W, H);
+                // 1. Draw animated background image FIRST
+                drawBackground(animT);
+                // 2. Then draw particles, nodes, windows on top
+                drawNodes(animT);
+                drawParticles();
+                windows.forEach(win => {
+                    drawWindow(win, animT);
+                    win.x += win.vx;
+                    win.y += win.vy;
+                    if (win.x + win.w * win.scale < 0) win.x = W;
+                    if (win.x > W) win.x = -win.w * win.scale;
+                    if (win.y + win.h * win.scale < 0) win.y = H;
+                    if (win.y > H) win.y = -win.h * win.scale;
+                });
+                requestAnimationFrame(animate);
+            }
+
+            function init() {
+                resize();
+                createNodes();
+                createWindows();
+                createParticles();
+                animate();
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                createNodes();
+                createWindows();
+                createParticles();
+            });
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+        </script>
 
         <!-- RGB LED Particles -->
         <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -590,19 +944,28 @@
     </section>
 
     <!-- 3. EL CAOS DEL PAPEL (Problema/Solución - Enhanced 3D) -->
-    <section id="problema-solucion-section" class="snap-start py-32 px-8 relative z-10 border-y border-white/5 bg-luxury-black overflow-hidden transition-all duration-1000">
+    <section id="problema-solucion-section" class="snap-start py-32 px-8 relative z-10 border-y border-white/5 overflow-hidden transition-all duration-1000">
         
-        <!-- Dynamic Split Background -->
-        <div class="absolute inset-0 z-[-2] flex transition-all duration-700" id="split-bg-container">
-            <!-- Left Side: Chaos/Problem -->
-            <div id="bg-chaos" class="w-1/2 h-full relative overflow-hidden transition-all duration-700 opacity-20" style="background: radial-gradient(circle at right, rgba(239,68,68,0.1), transparent);">
-                <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, rgba(239,68,68,0.05) 0px, rgba(239,68,68,0.05) 2px, transparent 2px, transparent 10px); animation: moveGridLeft 10s linear infinite;"></div>
-                <div class="absolute inset-0 bg-red-500/5 mix-blend-overlay animate-pulse-glow" style="filter: contrast(150%) brightness(80%);"></div>
-            </div>
-            <!-- Right Side: Order/Solution -->
-            <div id="bg-order" class="w-1/2 h-full relative overflow-hidden transition-all duration-700 opacity-20" style="background: radial-gradient(circle at left, rgba(0,240,255,0.1), transparent);">
-                <div class="absolute inset-0" style="background-image: linear-gradient(to right, rgba(0,240,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,240,255,0.15) 1px, transparent 1px); background-size: 50px 50px; transform: perspective(500px) rotateX(60deg); animation: moveGridRight 10s linear infinite;"></div>
-            </div>
+        <!-- HERO IMAGE BACKGROUND (animated) -->
+        <div class="absolute inset-0 z-[-3] overflow-hidden">
+            <img src="HERO%20IMAGE%20LANDING%20PAGE%20SISTEMAS%20ISMO.png" 
+                 alt="" 
+                 class="w-full h-full object-cover object-center scale-110"
+                 style="animation: heroBgKenBurns 20s ease-in-out infinite alternate;">
+            <style>
+                @keyframes heroBgKenBurns {
+                    0%   { transform: scale(1.1) translateX(0%) translateY(0%); }
+                    50%  { transform: scale(1.18) translateX(-3%) translateY(-2%); }
+                    100% { transform: scale(1.1) translateX(3%) translateY(2%); }
+                }
+            </style>
+        </div>
+        <!-- Dark overlay so text is readable -->
+        <div class="absolute inset-0 z-[-2] bg-gradient-to-b from-luxury-black/70 via-luxury-black/50 to-luxury-black/80"></div>
+        <!-- Cyan/Red split tint -->
+        <div class="absolute inset-0 z-[-1] flex transition-all duration-700" id="split-bg-container">
+            <div id="bg-chaos" class="w-1/2 h-full bg-red-500/5 transition-all duration-700"></div>
+            <div id="bg-order" class="w-1/2 h-full bg-luxury-cyan/5 transition-all duration-700"></div>
         </div>
 
         <style>
@@ -661,67 +1024,67 @@
                 <div class="relative w-full card-wrapper card-wrapper-left z-10 reveal-element dashboard-3d animate-float" style="animation-delay: 0.5s;" onmouseenter="document.getElementById('bg-chaos').style.width='60%'; document.getElementById('bg-order').style.width='40%'; document.getElementById('bg-chaos').style.opacity='0.4';" onmouseleave="document.getElementById('bg-chaos').style.width='50%'; document.getElementById('bg-order').style.width='50%'; document.getElementById('bg-chaos').style.opacity='0.2';">
                     
                     <!-- Tablet Hardware Frame -->
-                    <div class="p-2 bg-[#1a1c23] rounded-[2.5rem] border border-white/5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
+                    <div class="p-2 bg-[#1a1c23]/60 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
                         <!-- Camera Notch -->
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-5 md:h-6 bg-[#0a0a0f] rounded-b-xl flex items-center justify-center gap-2 z-30 border-b border-x border-white/5 shadow-inner">
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
                             <div class="w-1 h-1 rounded-full bg-blue-500/60 shadow-[0_0_6px_rgba(59,130,246,0.9)]"></div>
                         </div>
 
-                        <!-- Card Screen -->
-                        <div class="bg-[#050505] p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen">
+                        <!-- Card Screen (glassmorphism) -->
+                        <div class="bg-black/35 backdrop-blur-xl p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen border border-red-500/10">
                             <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none"></div>
                             <div class="absolute top-0 right-0 w-48 h-48 bg-red-500/10 rounded-full blur-[80px] transition-all duration-500" style="opacity: 0.5;"></div>
                             
                             <!-- Center Core -->
                             <div class="text-center z-10 transition-all duration-700 group-hover/screen:scale-75 group-hover/screen:opacity-20 flex flex-col items-center justify-center pointer-events-none">
                                 <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-red-500/30 bg-red-500/10 flex items-center justify-center text-red-500 text-3xl md:text-4xl font-bold shadow-[0_0_30px_rgba(239,68,68,0.3)] mb-6">✕</div>
-                                <h3 class="text-lg md:text-2xl uppercase tracking-[0.2em] text-white">El Problema de Hoy</h3>
-                                <p class="text-red-500/50 text-xs tracking-widest mt-4 animate-pulse">ESCANEANDO SISTEMA...</p>
+                                <h3 class="text-xl md:text-3xl uppercase tracking-[0.2em] text-white font-bold">El Problema de Hoy</h3>
+                                <p class="text-red-500/60 text-sm tracking-widest mt-4 animate-pulse font-mono">ESCANEANDO SISTEMA...</p>
                             </div>
 
                             <!-- Holographic Floating Cards -->
                             <!-- Card 1: Top Left -->
                             <div class="absolute top-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[50ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Papel/Excel</span>
+                                        <span class="text-red-400 text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Papel/Excel</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Manejas información crítica en papel o Excel.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Manejas información crítica en papel o Excel.</p>
                                 </div>
                             </div>
                             
                             <!-- Card 2: Top Right -->
                             <div class="absolute top-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[150ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pérdida Datos</span>
+                                        <span class="text-red-400 text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Pérdida Datos</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Pierdes datos importantes del día a día.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Pierdes datos importantes del día a día.</p>
                                 </div>
                             </div>
 
                             <!-- Card 3: Bottom Left -->
                             <div class="absolute bottom-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[250ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
-                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Visibilidad Nula</span>
+                                        <span class="text-red-400 text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Visibilidad Nula</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">No tienes control ni visibilidad de tu operación.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">No tienes control ni visibilidad de tu operación.</p>
                                 </div>
                             </div>
 
                             <!-- Card 4: Bottom Right -->
                             <div class="absolute bottom-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[350ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-red-500/40 shadow-[0_0_25px_rgba(239,68,68,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-red-500/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span class="text-red-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Procesos Lentos</span>
+                                        <span class="text-red-400 text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Procesos Lentos</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Dependes de procesos manuales y con error.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Dependes de procesos manuales y con error.</p>
                                 </div>
                             </div>
                         </div>
@@ -744,67 +1107,67 @@
                 <div class="relative w-full card-wrapper card-wrapper-right z-10 reveal-element dashboard-3d animate-float-delayed" onmouseenter="document.getElementById('bg-order').style.width='60%'; document.getElementById('bg-chaos').style.width='40%'; document.getElementById('bg-order').style.opacity='0.6';" onmouseleave="document.getElementById('bg-order').style.width='50%'; document.getElementById('bg-chaos').style.width='50%'; document.getElementById('bg-order').style.opacity='0.2';">
                     
                     <!-- Tablet Hardware Frame -->
-                    <div class="p-2 bg-[#1a1c23] rounded-[2.5rem] border border-white/5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
+                    <div class="p-2 bg-[#1a1c23]/60 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] relative tablet-frame ring-1 ring-black/50">
                         <!-- Camera Notch -->
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-5 md:h-6 bg-[#0a0a0f] rounded-b-xl flex items-center justify-center gap-2 z-30 border-b border-x border-white/5 shadow-inner">
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
                             <div class="w-1 h-1 rounded-full bg-blue-500/60 shadow-[0_0_6px_rgba(59,130,246,0.9)]"></div>
                         </div>
 
-                        <!-- Card Screen -->
-                        <div class="bg-[#050505] p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen">
+                        <!-- Card Screen (glassmorphism) -->
+                        <div class="bg-black/35 backdrop-blur-xl p-6 rounded-[2rem] relative overflow-hidden h-full min-h-[500px] flex items-center justify-center group/screen border border-luxury-cyan/10">
                             <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none"></div>
                             <div class="absolute top-0 left-0 w-64 h-64 bg-luxury-cyan/10 rounded-full blur-[100px] transition-all duration-500" style="opacity: 0.5;"></div>
                             
                             <!-- Center Core -->
                             <div class="text-center z-10 transition-all duration-700 group-hover/screen:scale-75 group-hover/screen:opacity-20 flex flex-col items-center justify-center pointer-events-none">
                                 <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-luxury-cyan/50 bg-luxury-cyan/20 flex items-center justify-center text-luxury-cyan text-3xl md:text-4xl font-bold shadow-[0_0_30px_rgba(0,240,255,0.3)] mb-6">✓</div>
-                                <h3 class="text-lg md:text-2xl uppercase tracking-[0.2em] text-white">La Solución ISMO</h3>
-                                <p class="text-luxury-cyan/50 text-xs tracking-widest mt-4 animate-pulse">SISTEMA OPTIMIZADO</p>
+                                <h3 class="text-xl md:text-3xl uppercase tracking-[0.2em] text-white font-bold">La Solución ISMO</h3>
+                                <p class="text-luxury-cyan/60 text-sm tracking-widest mt-4 animate-pulse font-mono">SISTEMA OPTIMIZADO</p>
                             </div>
 
                             <!-- Holographic Floating Cards -->
                             <!-- Card 1: Top Left -->
                             <div class="absolute top-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[50ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Digitalización</span>
+                                        <span class="text-luxury-cyan text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Digitalización</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Digitalizamos y optimizamos absolutamente TODO.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Digitalizamos y optimizamos absolutamente TODO.</p>
                                 </div>
                             </div>
                             
                             <!-- Card 2: Top Right -->
                             <div class="absolute top-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 -translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[150ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">A La Medida</span>
+                                        <span class="text-luxury-cyan text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">A La Medida</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Desarrollo 100% personalizado a tu operación.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Desarrollo 100% personalizado a tu operación.</p>
                                 </div>
                             </div>
 
                             <!-- Card 3: Bottom Left -->
                             <div class="absolute bottom-6 left-6 opacity-0 group-hover/screen:opacity-100 transform -translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[250ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pragmatismo</span>
+                                        <span class="text-luxury-cyan text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Pragmatismo</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed">Soluciones prácticas listas para implementar.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">Soluciones prácticas listas para implementar.</p>
                                 </div>
                             </div>
 
                             <!-- Card 4: Bottom Right -->
                             <div class="absolute bottom-6 right-6 opacity-0 group-hover/screen:opacity-100 transform translate-x-8 translate-y-8 group-hover/screen:translate-x-0 group-hover/screen:translate-y-0 transition-all duration-700 delay-[350ms] z-20 pointer-events-none w-[45%] max-w-[200px]">
-                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-luxury-black/90">
+                                <div class="glass-card p-3 md:p-4 rounded-xl border-luxury-cyan/40 shadow-[0_0_25px_rgba(0,240,255,0.2)] backdrop-blur-xl bg-black/40">
                                     <div class="flex items-center gap-2 border-b border-luxury-cyan/20 pb-2 mb-2">
                                         <svg class="w-3.5 h-3.5 text-luxury-cyan shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span class="text-luxury-cyan text-[9px] md:text-[10px] font-bold tracking-widest uppercase truncate">Pago Único</span>
+                                        <span class="text-luxury-cyan text-[10px] md:text-xs font-bold tracking-widest uppercase truncate">Pago Único</span>
                                     </div>
-                                    <p class="text-[10px] md:text-xs text-silver font-light leading-relaxed"><strong class="text-luxury-cyan drop-shadow-[0_0_5px_rgba(0,240,255,0.8)] font-bold">Sin rentas.</strong> Tu sistema, tus reglas.</p>
+                                    <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed"><strong class="text-luxury-cyan drop-shadow-[0_0_5px_rgba(0,240,255,0.8)] font-bold">Sin rentas.</strong> Tu sistema, tus reglas.</p>
                                 </div>
                             </div>
                         </div>
@@ -913,7 +1276,7 @@
 
 
     <!-- 4. TECNOLOGÍA (New Section - Animated Hologram Tech Stack) -->
-    <section class="snap-start py-32 relative px-8 overflow-hidden bg-luxury-black border-b border-white/5">
+    <section id="tecnologia" class="snap-start py-32 relative px-8 overflow-hidden bg-luxury-black border-b border-white/5">
         <style>
             @keyframes border-spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
             .rgb-border-container { position: relative; overflow: hidden; border-radius: 1.5rem; z-index: 10; padding: 2px; }
@@ -1088,14 +1451,15 @@
                     .rgb-module-inner {
                         position: relative;
                         z-index: 10;
-                        background: rgba(10, 14, 23, 0.95);
-                        backdrop-filter: blur(20px);
+                        background: rgba(10, 14, 23, 0.6);
+                        backdrop-filter: blur(24px);
                         border-radius: calc(1.5rem - 2px);
                         padding: 2.5rem 2rem;
                         height: 100%;
                         display: flex;
                         flex-direction: column;
                         justify-content: flex-start;
+                        border: 1px solid rgba(255, 255, 255, 0.05);
                     }
                 </style>
 
@@ -1165,7 +1529,7 @@
                 <!-- Item 8: App Clients (Rainbow) -->
                 <div class="rgb-module-card reveal-element group/bonus" style="--module-color-1: #ff007f; --module-color-2: #00f0ff; --module-glow: rgba(0,240,255,0.4); transition-delay: 0.8s;">
                     <div class="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-pink-500 to-luxury-cyan text-black text-[10px] font-black tracking-widest rounded-bl-xl z-20 shadow-lg">BONUS</div>
-                    <div class="rgb-module-inner bg-luxury-black/95">
+                    <div class="rgb-module-inner bg-luxury-black/60">
                         <div class="w-12 h-12 mb-6 bg-luxury-cyan/20 border border-luxury-cyan/50 flex items-center justify-center rounded-xl text-2xl shadow-[0_0_20px_rgba(0,240,255,0.4)] animate-pulse">🌟</div>
                         <h3 class="text-xl font-display font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-luxury-cyan">App Clientes</h3>
                         <p class="text-silver font-light text-sm leading-relaxed">Tu propia App para que tus clientes agenden y vean su historial 24/7.</p>
@@ -1176,118 +1540,74 @@
         </div>
     </section>
 
-    <!-- 5.5 CARRUSEL DE SISTEMAS (Gamified 3D Showcase) -->
-    <section id="carrusel-sistemas" class="snap-start py-32 bg-luxury-black border-b border-white/5 overflow-hidden relative">
-        <!-- Unified Hero-Style Background -->
-        <div class="absolute inset-0 z-[-2] opacity-30">
-            <img src="abstract_bg.png" alt="Tech Background" class="w-full h-full object-cover scale-110 object-center">
-            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black via-transparent to-luxury-black"></div>
+    <section id="sistemas" class="snap-start min-h-screen py-24 relative overflow-hidden">
+        <!-- Neon Animated Background -->
+        <div class="absolute inset-0 z-[-2] bg-black">
+            <img src="neon.jpg" alt="Neon Background" class="w-full h-full object-cover animate-neon-bg opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-8 relative z-10">
-            <div class="text-center reveal-element mb-16">
-                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold">Nuestra Suite Premium</p>
-                <h2 class="text-4xl md:text-5xl font-display font-light">Explora Nuestros <span class="text-gradient font-bold">Sistemas.</span></h2>
-                <p class="text-silver mt-4 text-sm max-w-2xl mx-auto">Selecciona un flyer para expandir la información técnica de cada solución.</p>
+            <div class="text-center mb-16 reveal-element">
+                <p class="text-xs uppercase tracking-[0.4em] text-luxury-cyan mb-4 font-bold">Arquitectura de Software</p>
+                <h2 class="text-4xl md:text-6xl font-display font-light">Nuestra <span class="text-gradient font-bold">Suite Premium.</span></h2>
             </div>
 
             <!-- 3D Carousel Container -->
-            <div class="carousel-3d-wrapper relative h-[500px] flex items-center justify-center perspective-[2000px]">
+            <div class="carousel-3d-wrapper relative h-[600px] flex items-center justify-center perspective-[2500px]">
                 <div class="carousel-container relative w-full h-full flex items-center justify-center transition-all duration-700 ease-out" id="app-carousel">
-                    <!-- Complete Suite of 17 Apps -->
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="0" onclick="focusItem(0)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.00.02 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="1" onclick="focusItem(1)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.15.38 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="2" onclick="focusItem(2)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.15.45 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="3" onclick="focusItem(3)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-10 at 11.26.15 AM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="4" onclick="focusItem(4)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (1).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="5" onclick="focusItem(5)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (2).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="6" onclick="focusItem(6)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (3).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="7" onclick="focusItem(7)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (4).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="8" onclick="focusItem(8)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (5).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="9" onclick="focusItem(9)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (6).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="10" onclick="focusItem(10)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (7).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="11" onclick="focusItem(11)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="12" onclick="focusItem(12)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (1).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="13" onclick="focusItem(13)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (2).jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="14" onclick="focusItem(14)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="15" onclick="focusItem(15)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/WhatsApp Image 2026-04-24 at 7.11.35 PM.jpeg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
-                    <div class="carousel-item absolute w-[300px] md:w-[350px] aspect-[3/4] transition-all duration-500 cursor-pointer group" data-index="16" onclick="focusItem(16)">
-                        <div class="holographic-card w-full h-full rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl">
-                            <img src="APPS/Gemini_Generated_Image_i16dgvi16dgvi16d.png" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                        </div>
-                    </div>
+                    <!-- Complete Suite of 17 Apps (Tablet Style) -->
+                    <script>
+                        const systems = [
+                            { src: "APPS/WhatsApp Image 2026-04-10 at 11.00.02 AM.jpeg", index: 0 },
+                            { src: "APPS/WhatsApp Image 2026-04-10 at 11.15.38 AM.jpeg", index: 1 },
+                            { src: "APPS/WhatsApp Image 2026-04-10 at 11.15.45 AM.jpeg", index: 2 },
+                            { src: "APPS/WhatsApp Image 2026-04-10 at 11.26.15 AM.jpeg", index: 3 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (1).jpeg", index: 4 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (2).jpeg", index: 5 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (3).jpeg", index: 6 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (4).jpeg", index: 7 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (5).jpeg", index: 8 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (6).jpeg", index: 9 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM (7).jpeg", index: 10 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.17 PM.jpeg", index: 11 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (1).jpeg", index: 12 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM (2).jpeg", index: 13 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.18 PM.jpeg", index: 14 },
+                            { src: "APPS/WhatsApp Image 2026-04-24 at 7.11.35 PM.jpeg", index: 15 },
+                            { src: "APPS/Gemini_Generated_Image_i16dgvi16dgvi16d.png", index: 16 }
+                        ];
+
+                        document.write(systems.map(sys => `
+                            <div class="carousel-item absolute w-[300px] md:w-[380px] aspect-[3/4.2] transition-all duration-700 cursor-pointer group" data-index="${sys.index}" onclick="focusItem(${sys.index})">
+                                <!-- Tablet Device Frame (Portrait) -->
+                                <div class="tablet-frame w-full h-full rounded-[2rem] p-2.5 bg-gradient-to-br from-white/20 via-white/5 to-white/10 border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden transition-all duration-500 group-hover:border-luxury-cyan/50">
+                                    <!-- Screen Interior -->
+                                    <div class="w-full h-full rounded-[1.4rem] overflow-hidden relative bg-black">
+                                        <img src="${sys.src}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100">
+                                        <!-- Reflection -->
+                                        <div class="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+                                        <!-- Scan Line -->
+                                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-cyan/10 to-transparent h-1/2 w-full -translate-y-full group-hover:animate-scan pointer-events-none z-10"></div>
+                                    </div>
+                                    <!-- Device Elements -->
+                                    <div class="absolute top-1/2 -left-0.5 -translate-y-1/2 w-1 h-8 rounded-full bg-white/20"></div> <!-- Side Buttons -->
+                                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 rounded-full bg-white/30"></div> <!-- Top Notch -->
+                                    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border border-white/10 bg-white/5"></div> <!-- Home Circle -->
+                                </div>
+                                <!-- Base Glow -->
+                                <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-20 bg-luxury-cyan/20 blur-[40px] opacity-0 group-[.active]:opacity-100 transition-opacity duration-700"></div>
+                            </div>
+                        `).join(''));
+                    </script>
                 </div>
 
                 <!-- Navigation Controls -->
-                <button onclick="rotateCarousel(-1)" class="absolute left-4 md:left-10 w-12 h-12 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <button onclick="rotateCarousel(-1)" class="absolute left-4 md:left-20 w-14 h-14 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50 shadow-2xl">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <button onclick="rotateCarousel(1)" class="absolute right-4 md:right-10 w-12 h-12 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <button onclick="rotateCarousel(1)" class="absolute right-4 md:right-20 w-14 h-14 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-luxury-cyan hover:text-black transition-all z-50 shadow-2xl">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
         </div>
@@ -1297,16 +1617,17 @@
                 transform-style: preserve-3d;
                 will-change: transform, opacity;
             }
-            .holographic-card {
-                background: rgba(255, 255, 255, 0.03);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
-                transition: all 0.5s ease;
+            .tablet-frame {
+                background: rgba(10, 14, 23, 0.4);
+                backdrop-filter: blur(25px);
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+                transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             }
-            .carousel-item.active .holographic-card {
-                border-color: rgba(0, 240, 255, 0.5);
-                box-shadow: 0 0 50px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0, 240, 255, 0.1);
-                transform: scale(1.1);
+            .carousel-item.active .tablet-frame {
+                border-color: rgba(0, 240, 255, 0.8);
+                box-shadow: 0 0 80px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0, 240, 255, 0.2);
+                transform: scale(1.08);
             }
         </style>
 
@@ -1318,21 +1639,20 @@
             function updateCarousel() {
                 items.forEach((item, i) => {
                     let offset = (i - currentRotationIndex + totalItems) % totalItems;
-                    
-                    // Logic to make it circular and centered
                     if (offset > totalItems / 2) offset -= totalItems;
 
                     const absOffset = Math.abs(offset);
-                    const zTranslate = absOffset * -300 - 100;
-                    const xTranslate = offset * 250;
-                    const rotateY = offset * -35;
-                    const opacity = Math.max(0.2, 1 - absOffset * 0.4);
+                    const zTranslate = absOffset * -450 - 50;
+                    const xTranslate = offset * 320;
+                    const rotateY = offset * -25;
+                    const opacity = Math.max(0.1, 1 - absOffset * 0.45);
                     const scale = 1 - absOffset * 0.15;
 
                     item.style.transform = `translateX(${xTranslate}px) translateZ(${zTranslate}px) rotateY(${rotateY}deg) scale(${scale})`;
                     item.style.opacity = opacity;
-                    item.style.zIndex = totalItems - absOffset;
+                    item.style.zIndex = Math.round(100 - absOffset * 10);
                     
+                    const frame = item.querySelector('.tablet-frame');
                     if (offset === 0) {
                         item.classList.add('active');
                     } else {
@@ -1503,9 +1823,15 @@
     </section>
 
     <!-- 7. MODELO DE TRABAJO (Animated Hologram Box) -->
-    <section class="snap-start py-32 px-8 bg-luxury-gray relative">
+    <section id="modelo" class="snap-start py-32 px-8 relative overflow-hidden">
+        <!-- Neon Technical Background -->
+        <div class="absolute inset-0 z-[-2]">
+            <img src="neon.jpg" alt="Neon Background" class="w-full h-full object-cover animate-pan-bg opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black via-luxury-black/80 to-luxury-black"></div>
+        </div>
+
         <div class="max-w-4xl mx-auto reveal-element">
-            <div class="dashboard-3d p-12 lg:p-20 border border-luxury-cyan/20 rounded-3xl relative overflow-hidden glass-card animate-float-slow">
+            <div class="dashboard-3d p-12 lg:p-20 border border-luxury-cyan/20 rounded-3xl relative overflow-hidden bg-black/40 backdrop-blur-[30px] animate-float-slow shadow-[0_0_50px_rgba(0,240,255,0.1)]">
                 <div class="absolute -right-40 -top-40 w-96 h-96 bg-luxury-blue/30 rounded-full blur-[100px]"></div>
                 <div class="absolute -left-40 -bottom-40 w-96 h-96 bg-luxury-cyan/20 rounded-full blur-[100px]"></div>
                 
