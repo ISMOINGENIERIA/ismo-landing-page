@@ -242,8 +242,82 @@
             <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado" target="_blank" class="hidden md:block text-xs uppercase tracking-[0.15em] font-medium luxury-button px-6 py-3 text-white rounded-sm">
                 Solicitar Sistema
             </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden flex items-center justify-center w-10 h-10 border border-luxury-cyan/30 rounded-lg bg-luxury-cyan/10 text-luxury-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:scale-110 transition-all duration-300">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] translate-x-full transition-transform duration-500 ease-in-out lg:hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-luxury-black/60 backdrop-blur-md" onclick="toggleMobileMenu()"></div>
+        
+        <!-- Menu Content -->
+        <div class="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-luxury-black/95 backdrop-blur-2xl border-l border-white/10 p-8 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
+            <div class="flex justify-between items-center mb-12">
+                <div class="font-display font-light text-xl tracking-[0.2em] uppercase text-white flex items-center gap-2">
+                    <img src="ismo%20logo.png" alt="Logo" class="w-8 h-8 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">
+                    <div>MENU<span class="font-bold text-gradient"> ISMO</span></div>
+                </div>
+                <button onclick="toggleMobileMenu()" class="text-luxury-cyan hover:rotate-90 transition-all duration-300">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="flex flex-col gap-6 overflow-y-auto custom-scrollbar">
+                <a href="#" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Inicio
+                </a>
+                <a href="#que-hacemos-section" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Propuesta
+                </a>
+                <a href="#problema-solucion-section" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Problema
+                </a>
+                <a href="#video-showcase" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Demo
+                </a>
+                <a href="#tecnologia" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Tecnología
+                </a>
+                <a href="#modulos" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Ecosistema
+                </a>
+                <a href="#sistemas" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Suite
+                </a>
+                <a href="#industrias" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Industrias
+                </a>
+                <a href="#modelo" onclick="toggleMobileMenu()" class="group flex items-center gap-4 text-sm uppercase tracking-[0.2em] font-bold text-white/60 hover:text-luxury-cyan transition-all duration-300">
+                    <span class="w-1.5 h-1.5 bg-luxury-cyan rounded-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#00f0ff]"></span>
+                    Modelo
+                </a>
+                
+                <div class="h-px bg-white/10 my-6"></div>
+                
+                <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado" target="_blank" class="luxury-button px-6 py-5 text-center text-xs uppercase tracking-[0.2em] font-bold text-white rounded-sm">
+                    Solicitar Sistema
+                </a>
+            </div>
+
+            <div class="mt-auto pt-8">
+                <p class="text-[10px] tracking-[0.3em] uppercase text-luxury-cyan mb-2 font-black">Contacto Directo</p>
+                <p class="text-xs font-light text-white/60">+52 656 122 0244</p>
+            </div>
+        </div>
+    </div>
 
     <!-- 1. HERO SECTION (Enhanced with Instant Background) -->
     <section class="snap-start relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden pt-32 pb-20">
@@ -1971,6 +2045,22 @@
         document.addEventListener('mouseup', () => {
             cursorScaler.style.transform = 'scale(1)';
         });
+
+        // Mobile Menu Toggle Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isHidden = menu.classList.contains('translate-x-full');
+            
+            if (isHidden) {
+                menu.classList.remove('translate-x-full');
+                menu.classList.add('translate-x-0');
+                document.body.style.overflow = 'hidden'; // Prevent scroll
+            } else {
+                menu.classList.remove('translate-x-0');
+                menu.classList.add('translate-x-full');
+                document.body.style.overflow = ''; // Restore scroll
+            }
+        }
     </script>
 </body>
 </html>
