@@ -178,7 +178,7 @@
     <nav class="fixed w-full z-50 py-6 transition-all duration-500 backdrop-blur-md bg-luxury-black/50 border-b border-white/5" id="navbar">
         <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
             <div class="font-display font-light text-2xl tracking-[0.2em] uppercase text-white flex items-center gap-3">
-                <img src="ismo logo.png" alt="Sistemas ISMO Logo" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">
+                <img src="ismo%20logo.png" alt="Sistemas ISMO Logo" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]">
                 <div>Sistemas<span class="font-bold text-gradient"> ISMO</span></div>
             </div>
             <a href="https://wa.me/526561220244?text=Hola,%20deseo%20solicitar%20un%20sistema%20personalizado" target="_blank" class="hidden md:block text-xs uppercase tracking-[0.15em] font-medium luxury-button px-6 py-3 text-white rounded-sm">
@@ -825,6 +825,92 @@
             </div>
         </div>
     </section>
+
+    <!-- 3.5 VIDEO SHOWCASE (New Section: Holographic Tablet & Dynamic Dashboard) -->
+    <section id="video-showcase" class="snap-start py-32 px-8 relative z-10 border-b border-white/5 bg-luxury-black overflow-hidden flex items-center justify-center min-h-screen">
+        
+        <!-- Impactful Background -->
+        <div class="absolute inset-0 z-[-2]">
+            <img src="abstract_bg.png" alt="Mission Control" class="w-full h-full object-cover opacity-20 scale-110">
+            <div class="absolute inset-0 bg-gradient-to-b from-luxury-black via-transparent to-luxury-black"></div>
+        </div>
+
+        <!-- DYNAMIC DASHBOARD GLOW (Moving Dials) -->
+        <div class="absolute inset-0 pointer-events-none opacity-40">
+            <!-- Dial 1 (Top Left) -->
+            <div class="absolute top-20 left-20 w-40 h-40 animate-spin-slow">
+                <svg viewBox="0 0 100 100" class="w-full h-full text-luxury-cyan/30">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="5 5" />
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="60 100" />
+                </svg>
+            </div>
+            <!-- Dial 2 (Bottom Right) -->
+            <div class="absolute bottom-20 right-20 w-64 h-64 animate-spin-slow-reverse">
+                <svg viewBox="0 0 100 100" class="w-full h-full text-luxury-blue/20">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.2" />
+                    <path d="M 50 2 A 48 48 0 0 1 98 50" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4" />
+                </svg>
+            </div>
+            <!-- Floating Data Grids -->
+            <div class="absolute top-1/4 right-10 w-48 h-32 border border-white/5 bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden hidden md:block">
+                <div class="w-full h-1 bg-luxury-cyan/40 animate-pulse"></div>
+                <div class="p-4 space-y-2">
+                    <div class="h-1 w-full bg-white/10 rounded-full"></div>
+                    <div class="h-1 w-3/4 bg-white/10 rounded-full"></div>
+                    <div class="h-1 w-1/2 bg-luxury-cyan/30 rounded-full"></div>
+                </div>
+            </div>
+            <!-- Glowing Orbs -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-luxury-blue/10 rounded-full blur-[120px] animate-pulse-glow"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto w-full relative z-10 flex flex-col items-center">
+            <div class="text-center mb-16 reveal-element">
+                <p class="text-xs uppercase tracking-[0.3em] text-luxury-cyan mb-4 font-bold">Ingeniería en Acción</p>
+                <h2 class="text-4xl md:text-5xl font-display font-light">Mira cómo <span class="text-gradient font-bold">evolucionamos</span> tu negocio.</h2>
+            </div>
+
+            <!-- HOLOGRAPHIC TABLET -->
+            <div class="relative w-full max-w-4xl aspect-video reveal-element" style="transition-delay: 0.2s;">
+                <!-- Glowing Halo -->
+                <div class="absolute inset-0 bg-luxury-cyan/10 blur-[100px] rounded-full animate-pulse-glow"></div>
+                
+                <!-- Tablet Frame (Simplified to ensure video player compatibility) -->
+                <div class="relative tablet-frame ring-1 ring-white/10 p-2 bg-[#1a1c23] rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.8)] transition-all duration-700">
+                    <!-- Camera Notch -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#0a0a0f] rounded-b-xl flex items-center justify-center gap-2 border-b border-x border-white/5 z-20">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-800"></div>
+                        <div class="w-1 h-1 rounded-full bg-luxury-cyan/60 shadow-[0_0_6px_rgba(0,240,255,0.9)]"></div>
+                    </div>
+
+                    <!-- Screen Content (YouTube) -->
+                    <div class="bg-black rounded-[1rem] md:rounded-[2rem] relative overflow-hidden aspect-video">
+                        <iframe 
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/akvNV3hwm_w?rel=0&controls=1" 
+                            title="Sistemas ISMO Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <!-- Reflection Overlay -->
+                    <div class="absolute inset-0 pointer-events-none rounded-[1.5rem] md:rounded-[2.5rem] bg-gradient-to-tr from-white/5 to-transparent"></div>
+                </div>
+
+                <!-- Floating Labels -->
+                <div class="absolute -top-6 -left-4 md:-top-10 md:-left-10 glass-card px-4 py-2 rounded-xl border-luxury-cyan/40 animate-float z-20">
+                    <span class="text-[8px] md:text-[10px] font-bold tracking-widest text-luxury-cyan uppercase">SYSTEM_PLAYBACK</span>
+                </div>
+                <div class="absolute -bottom-6 -right-4 md:-bottom-10 md:-right-10 glass-card px-4 py-2 rounded-xl border-luxury-blue/40 animate-float-delayed z-20">
+                    <span class="text-[8px] md:text-[10px] font-bold tracking-widest text-luxury-blue uppercase">LIVE_DEMO.EXE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- 4. TECNOLOGÍA (New Section - Animated Hologram Tech Stack) -->
     <section class="snap-start py-32 relative px-8 overflow-hidden bg-luxury-black border-b border-white/5">
