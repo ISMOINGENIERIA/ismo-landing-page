@@ -2226,9 +2226,19 @@
             
             // Redirect after the animation finishes
             setTimeout(() => {
+                // Hide overlay just before redirecting so it's gone if they come back
+                overlay.classList.remove('active');
                 window.location.href = demoUrl;
             }, 3000);
         }
+
+        // Safety fix: Ensure the hologram is hidden if the user returns using the "Back" button
+        window.addEventListener('pageshow', (event) => {
+            const overlay = document.getElementById('demo-transition-overlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        });
     </script>
 
     <!-- Holographic Demo Transition Overlay -->
