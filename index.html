@@ -174,6 +174,154 @@
         .animate-neon-bg {
             animation: pan-bg 20s ease-in-out infinite !important;
         }
+
+        /* Demo Button Styles */
+        .demo-button {
+            background: linear-gradient(90deg, #00f0ff, #0047ff);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 50;
+        }
+        .demo-button:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.6);
+            letter-spacing: 0.25em;
+        }
+        .demo-button svg {
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        /* Holographic Transition Overlay */
+        #demo-transition-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999999;
+            background: rgba(2, 4, 8, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            perspective: 2000px;
+        }
+        #demo-transition-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .holo-tablet-container {
+            width: 85vw;
+            max-width: 1000px;
+            aspect-ratio: 16/10;
+            position: relative;
+            transform: rotateX(30deg) rotateY(-20deg) scale(0.6) translateZ(-500px);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #demo-transition-overlay.active .holo-tablet-container {
+            transform: rotateX(0deg) rotateY(0deg) scale(1) translateZ(0);
+            opacity: 1;
+        }
+
+        .holo-tablet-frame {
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 23, 0.8);
+            border: 2px solid rgba(0, 240, 255, 0.6);
+            border-radius: 2.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 0 80px rgba(0, 240, 255, 0.4), inset 0 0 40px rgba(0, 240, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .holo-screen-content {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .holo-loading-bar {
+            width: 50%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            margin-top: 3rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .holo-loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00f0ff, #0047ff);
+            box-shadow: 0 0 20px #00f0ff;
+            transition: width 2.5s cubic-bezier(0.45, 0, 0.55, 1);
+        }
+        #demo-transition-overlay.active .holo-loading-progress {
+            width: 100%;
+        }
+
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 240, 255, 0.05) 45%, 
+                rgba(0, 240, 255, 0.3) 50%, 
+                rgba(0, 240, 255, 0.05) 55%, 
+                transparent 100%);
+            background-size: 100% 300px;
+            background-repeat: no-repeat;
+            animation: scanHolo 4s linear infinite;
+        }
+
+        @keyframes scanHolo {
+            0% { background-position: 0 -300px; }
+            100% { background-position: 0 1200px; }
+        }
+
+        .holo-logo-anim {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 0 30px #00f0ff);
+            margin-bottom: 2rem;
+            animation: pulseHolo 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseHolo {
+            0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 20px #00f0ff); }
+            50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 40px #00f0ff); }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-luxury-cyan selection:text-black">
@@ -1633,6 +1781,14 @@
             <div class="text-center mb-16 reveal-element">
                 <p class="text-xs uppercase tracking-[0.4em] text-luxury-cyan mb-4 font-bold">Arquitectura de Software</p>
                 <h2 class="text-4xl md:text-6xl font-display font-light">Nuestra <span class="text-gradient font-bold">Suite Premium.</span></h2>
+                
+                <!-- NEW DEMO BUTTON -->
+                <button onclick="triggerDemoEffect()" class="demo-button mt-10">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    PRUEBA NUESTRAS APP DEMO
+                </button>
             </div>
 
             <!-- 3D Carousel Container -->
@@ -2061,6 +2217,43 @@
                 document.body.style.overflow = ''; // Restore scroll
             }
         }
+
+        function triggerDemoEffect() {
+            const overlay = document.getElementById('demo-transition-overlay');
+            const demoUrl = "https://www.appsheet.com/start/02b9a078-56e6-429b-b8e9-0acac193f272?platform=desktop#appName=ISMO-CLIENTES-571207156&vss=H4sIAAAAAAAAA62OvQrCMBRGX0W-OU-QTaRDkeqQ4mIcYnsLwTYpTaqWkHc39QdxLY73u5zDCbhqugmvqgv4MXyvLU3gCBLl1JMEl9hY4wfbSjCJnepeo8hFmRVrscpFsZeIiCf2kXhy4GGBg_-hg0HXZLxuNA2zcMaT6A2n94ym4QdEZOhGr84tPfsTGGPaGluNjupDiloa43KT3Xtl6sLWyduo1lF8ADMrX65-AQAA&view=SISTEMAS%20ISMO";
+            
+            overlay.classList.add('active');
+            
+            // Redirect after the animation finishes
+            setTimeout(() => {
+                window.location.href = demoUrl;
+            }, 3000);
+        }
     </script>
+
+    <!-- Holographic Demo Transition Overlay -->
+    <div id="demo-transition-overlay">
+        <div class="holo-tablet-container">
+            <div class="holo-tablet-frame">
+                <div class="holo-screen-content">
+                    <div class="scanning-line"></div>
+                    <img src="ismo%20logo.png" alt="ISMO Logo" class="holo-logo-anim">
+                    <h2 class="text-3xl md:text-4xl font-display font-light tracking-[0.3em] text-white">SISTEMA <span class="text-gradient font-bold">ISMO</span></h2>
+                    <p class="text-[10px] md:text-xs tracking-[0.5em] text-luxury-cyan mt-6 animate-pulse uppercase font-bold">Iniciando Entorno Virtual...</p>
+                    <div class="holo-loading-bar">
+                        <div class="holo-loading-progress"></div>
+                    </div>
+                    <div class="mt-8 flex gap-4 opacity-40">
+                        <div class="w-2 h-2 rounded-full bg-luxury-cyan animate-ping"></div>
+                        <div class="w-2 h-2 rounded-full bg-luxury-blue animate-ping" style="animation-delay: 0.5s"></div>
+                        <div class="w-2 h-2 rounded-full bg-luxury-cyan animate-ping" style="animation-delay: 1s"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative elements for the "holographic" look -->
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-luxury-cyan/10 rounded-full blur-[100px] animate-pulse"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-luxury-blue/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 1s"></div>
+        </div>
+    </div>
 </body>
 </html>
