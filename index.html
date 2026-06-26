@@ -390,6 +390,23 @@
         @keyframes spin-border-funerario{ from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes spin-border-eventos  { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* === NAIPE / CARD-DEAL ENTRANCE ANIMATION === */
+        @keyframes cardDeal {
+            0%   { opacity: 0; transform: translateY(-160px) rotate(var(--deal-rotate, 0deg)) scale(0.75); }
+            55%  { opacity: 1; transform: translateY(14px)   rotate(calc(var(--deal-rotate, 0deg) * 0.15)) scale(1.03); }
+            75%  { transform: translateY(-5px)  rotate(calc(var(--deal-rotate, 0deg) * 0.05)) scale(0.99); }
+            90%  { transform: translateY(2px)   rotate(0.3deg) scale(1.005); }
+            100% { opacity: 1; transform: translateY(0)      rotate(0deg) scale(1); }
+        }
+        /* Before trigger: cards are invisible */
+        .card-deal-ready {
+            opacity: 0;
+        }
+        /* When section hits viewport, JS adds .card-deal-animate */
+        .card-deal-animate {
+            animation: cardDeal 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
         .rgb-card {
             position: relative;
             border-radius: 1.5rem;
@@ -436,9 +453,9 @@
         /* Transparent inner card */
         .rgb-card-inner {
             position: relative;
-            background: rgba(10, 14, 23, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(10, 14, 23, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: calc(1.5rem - 2px);
             z-index: 2;
             width: 100%;
@@ -449,7 +466,7 @@
             padding: 2rem 1.5rem;
             transition: background 0.5s ease;
         }
-        .rgb-card:hover .rgb-card-inner { background: rgba(10, 14, 23, 0.6); }
+        .rgb-card:hover .rgb-card-inner { background: rgba(10, 14, 23, 0.35); }
 
         /* Per-avatar inner glow on hover */
         .rgb-card[data-system="doctor"]:hover    .rgb-card-inner { box-shadow: inset 0 0 30px rgba(0,240,255,0.08); }
@@ -1166,7 +1183,7 @@
     </section>
 
     <!-- NUEVA SECCION: TUS SISTEMAS -->
-    <section id="tus-sistemas-section" class="snap-start py-32 px-8 relative z-10 border-b border-white/5 overflow-hidden transition-all duration-1000 reveal-element">
+    <section id="tus-sistemas-section" class="snap-start py-32 px-8 relative z-10 border-b border-white/5 overflow-hidden">
         
         <!-- HERO IMAGE BACKGROUND (animated) -->
         <div class="absolute inset-0 z-[-3] overflow-hidden">
@@ -1199,7 +1216,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 justify-center">
                 
                 <!-- CARD 1: DoctorISMO -->
-                <div class="rgb-card group" data-system="doctor">
+                <div class="rgb-card group card-deal-ready" data-system="doctor" style="--deal-rotate:-18deg; animation-delay:0s;">
                     <div class="rgb-card-border"></div>
                     <!-- Speech Bubble -->
                     <div class="speech-bubble">
@@ -1220,7 +1237,7 @@
                 </div>
 
                 <!-- CARD 2: MecanISMO -->
-                <div class="rgb-card group" data-system="mecanismo">
+                <div class="rgb-card group card-deal-ready" data-system="mecanismo" style="--deal-rotate:12deg; animation-delay:0.12s;">
                     <div class="rgb-card-border"></div>
                     <!-- Speech Bubble -->
                     <div class="speech-bubble">
@@ -1241,7 +1258,7 @@
                 </div>
 
                 <!-- CARD 3: KidISMO -->
-                <div class="rgb-card group" data-system="kid">
+                <div class="rgb-card group card-deal-ready" data-system="kid" style="--deal-rotate:-6deg; animation-delay:0.24s;">
                     <div class="rgb-card-border"></div>
                     <!-- Speech Bubble -->
                     <div class="speech-bubble">
@@ -1262,7 +1279,7 @@
                 </div>
 
                 <!-- CARD 4: FunerISMO -->
-                <div class="rgb-card group" data-system="funerario">
+                <div class="rgb-card group card-deal-ready" data-system="funerario" style="--deal-rotate:20deg; animation-delay:0.36s;">
                     <div class="rgb-card-border"></div>
                     <!-- Speech Bubble -->
                     <div class="speech-bubble">
@@ -1283,7 +1300,7 @@
                 </div>
 
                 <!-- CARD 5: GentISMO PRO -->
-                <div class="rgb-card group" data-system="eventos">
+                <div class="rgb-card group card-deal-ready" data-system="eventos" style="--deal-rotate:-14deg; animation-delay:0.48s;">
                     <div class="rgb-card-border"></div>
                     <!-- Speech Bubble -->
                     <div class="speech-bubble">
@@ -2717,6 +2734,23 @@
                     if (cyanTint) cyanTint.style.backgroundColor = 'rgba(0, 240, 255, 0.05)';
                 });
             });
+
+            // === NAIPE DEAL ANIMATION ON SECTION ENTER ===
+            const sistemasSection = document.getElementById('tus-sistemas-section');
+            const dealCards = document.querySelectorAll('.card-deal-ready');
+            if (sistemasSection && dealCards.length) {
+                const dealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            dealCards.forEach(card => {
+                                card.classList.add('card-deal-animate');
+                            });
+                            dealObserver.unobserve(sistemasSection); // fire only once
+                        }
+                    });
+                }, { threshold: 0.18 });
+                dealObserver.observe(sistemasSection);
+            }
         });
     </script>
 
